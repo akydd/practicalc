@@ -52,6 +52,9 @@ int main(void)
 	 * have to check for the NULL pointer first, otherwise we risk a seg
 	 * fault for trying to check if the  pointer (which could be NULL) is
 	 * pointing to a non \0 character.
+	 *
+	 * I have assumed that the compiler will always check the left
+	 * condition before the right.  I don't know if this is true.
 	 */
 	if ((d1 == NULL) || (*d1 != '\0')) {
 		printf("The first input date is invalid.\n");
