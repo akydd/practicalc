@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define WIDTH 5
 #define HEIGHT 3
-#define SIZE 2
+#define SIZE 8 
 
 int main(void)
 {
@@ -12,31 +12,25 @@ int main(void)
 
 		for (x = 0; x <= SIZE * (WIDTH + 1); x++) {
 
-			if ( ( x % (WIDTH + 1) == 0 ) &&
-					( y % (HEIGHT + 1) == 0 ) ) {
-				/* non-ending corner pieces */
-				(void)printf("+");
-				break
-			} else if ( ( x % (SIZE * (WIDTH + 1) ) == 0 ) &&
-					( y % (HEIGHT + 1) == 0 ) ) {
-				/* ending corner pieces */
-				(void)printf("+\n");
-				break;
-			} else if ( () && () ) {
-				/* spaces */
-				(void)printf(" ");
-				break;
-			} else if () {
-				/* non-ending vertical bars */
-				(void)printf("|");
-				break;
-			} else if () {
-				/* ending vertical bars */
-				(void)printf("|\n");
-				break;
-			} else if () {
-				/* horizontal bars */
-				(void)printf("-");
+			if ( x % (WIDTH + 1) == 0 ) {
+
+				if ( y % (HEIGHT + 1) == 0 ) {
+					(void)printf("+");
+				} else {
+					(void)printf("|");
+				}
+
+				if (x == SIZE * (WIDTH + 1)) {
+					(void)printf("\n");
+				}
+
+			} else {
+
+				if ( y % (HEIGHT + 1) == 0 ) {
+					(void)printf("-");;
+				} else {
+					(void)printf(" ");
+				}
 			}
 		}
 	}
