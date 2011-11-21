@@ -46,7 +46,7 @@ int main(void)
 		if (char_check == 1) {
 			(void)printf("You entered a vowel.\n");
 		} else if (char_check == -1) {
-			(void)printf("You did not enter a vowel.\n");
+			(void)printf("You entered a consonant.\n");
 		} else {
 			(void)printf("You did not enter a letter.  Bye!\n");
 			break;
