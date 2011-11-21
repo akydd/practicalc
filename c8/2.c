@@ -6,7 +6,7 @@
  *    Description:  function begins(string1, string2) returns true if string1
  *    		    begins string2. Takes newlines into account.
  *
- *        Version:  1.0
+ *        Version:  2.0
  *        Created:  11-11-20 03:12:16 PM
  *       Revision:  none
  *       Compiler:  gcc
@@ -23,24 +23,26 @@ static int begins(char*, char*);
 
 int begins(char *string1, char *string2)
 {
-	int ret_val = 1;
-	char *str1_ptr = string1;
-	char *str2_ptr = string2;
-
-	if (strlen(string1) <= strlen(string2)) {
-		while (*str1_ptr != '\0') {
-			if (*str1_ptr != *str2_ptr) {
-				ret_val = 0;
-				break;
-			}
-			str1_ptr++;
-			str2_ptr++;
+	while(1 == 1) {
+		/* Handles two cases:
+		 * 1. empty string1 always begins string2
+		 * 2. if we've made it to the end of string1 without exiting, then
+		 *    string1 must have matched string2. */
+		if (*string1 == '\0') {
+			return 1;
 		}
-	} else {
-		ret_val = 0;
-	}
 
-	return ret_val;
+		/* Handles two cases:
+		 * 1. some letter in string1 does not match to string2
+		 * 2. string2 is shorter than string1 */
+		if (*string1 != *string2) {
+			return 0;
+		}
+
+		/* If we get here, move on to the next char */
+		string1++;
+		string2++;
+	}
 }
 
 int main(void)
