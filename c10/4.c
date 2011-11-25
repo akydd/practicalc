@@ -4,7 +4,7 @@
  *       Filename:  4.c
  *
  *    Description:  Count the number of bits set in the binary representation
- *    		    of an insigned integer, not counting the sign bit.
+ *    		    of an int, not counting the sign bit.
  *
  *        Version:  1.0
  *        Created:  11-11-24 08:40:09 PM
