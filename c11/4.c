@@ -57,7 +57,7 @@ void get_airport_code(char *code)
 			/* if no newline, input has exceeded buffer.
 			 * Discard extra
 			 */
-			scanf("%*[^\n]");
+			(void)scanf("%*[^\n]");
 			(void)fgetc(stdin);
 		}
 	}
