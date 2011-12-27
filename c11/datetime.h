@@ -23,6 +23,7 @@ struct datetime {
 	int minute;
 };
 
+void print_datetime(struct datetime);
 int diff_in_minutes(struct datetime, struct datetime);
 int minutes_between_years(struct datetime, struct datetime);
 int minutes_between_months(struct datetime, struct datetime);

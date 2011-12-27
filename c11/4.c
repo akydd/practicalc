@@ -4,7 +4,9 @@
  *       Filename:  4.c
  *
  *    Description:  A program to list all planes that leave from two airports
- *    		    specified by the user.  NOT FINISHED!
+ *    		    specified by the user.  
+ *
+ *    		    To build: gcc -o4 4.c flight_info.c datetime.c -I -Wall
  *
  *        Version:  1.0
  *        Created:  11-12-25 07:56:23 PM
@@ -23,12 +25,48 @@
 
 static struct flight_info flights[MAX_FLIGHTS];
 
+int is_quit(char *code)
+{
+	if (strlen(code) == 1) {
+		if (code[0] == 'Q') {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+void search_flights(char *dept_code)
+{
+	int i;
+	for (i = 0; i < MAX_FLIGHTS; i++) {
+		if (strcmp(flights[i].origin, dept_code) == 0) {
+			print_flight_info(flights[i]);
+		}
+	}
+}
+
+void get_airport_code(char *code)
+{
+	/* fgets returns NULL when error */
+	if (fgets(code, 20, stdin) != NULL) {
+
+		/* remove trailing newline if there is one */
+		if (code[strlen(code) - 1] == '\n') {
+			code[strlen(code) - 1] = '\0';
+		} else {
+			/* if no newline, input has exceeded buffer.
+			 * Discard extra
+			 */
+			scanf("%*[^\n]");
+			(void)fgetc(stdin);
+		}
+	}
+}
+
 int main(void)
 {
-	char dept_code_1[3];
-	char dept_code_2[3];
-	char buffer[10];
-	int result = 0;
+	char dept_code_1[20];
+	char dept_code_2[20];
 
 	/* test data */
 	struct flight_info flight_0 = {
@@ -68,17 +106,25 @@ int main(void)
 	flights[3] = flight_3;
 
 	while (1 == 1) {
-		buffer[0] = '\0';
-		(void)printf("Enter first 3 letter departure code: ");
-		(void)fgets(buffer, sizeof(buffer), stdin);
-		result = sscanf(buffer, "%4s", dept_code_1);
-		buffer[0] = '\0';
-		(void)printf("Enter second 3 letter departure code: ");
-		(void)fgets(buffer, sizeof(buffer), stdin);
-		result = sscanf(buffer, "%4s", dept_code_2);
+		(void)printf("Enter first departure code, 'Q' to quit: ");
+		get_airport_code(dept_code_1);
+		if (is_quit(dept_code_1)) {
+			(void)printf("Bye!\n");
+			break;
+		}
 
-		(void)printf("%s\n", dept_code_1);
-		(void)printf("%s\n", dept_code_2);
+		(void)printf("Enter second departure code, 'Q' to quit: ");
+		get_airport_code(dept_code_2);
+		if (is_quit(dept_code_2)) {
+			(void)printf("Bye!\n");
+			break;
+		}
+
+		(void)printf("Seearching for %s...\n", dept_code_1);
+		search_flights(dept_code_1);
+
+		(void)printf("Seearching for %s...\n", dept_code_2);
+		search_flights(dept_code_2);
 	}
 	return 0;
 }

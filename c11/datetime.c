@@ -15,10 +15,20 @@
  *
  * =============================================================================
  */
+#include <stdio.h>
 #include "datetime.h"
 
 /* array stored #days/month for non leap-years */
 int days_per_month[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+/*
+ * Function to print the datetime, nicely formatted.
+ */
+void print_datetime(struct datetime a)
+{
+	(void)printf("%d-%d-%d, %d:%d",
+			a.year, a.month, a.day, a.hour, a.minute);
+}
 
 /**
  * function returns the difference, in minutes, between two datetime structs.

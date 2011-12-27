@@ -30,3 +30,4 @@ struct flight_info {
 	struct datetime arrival_dt;
 };
 
+void print_flight_info(struct flight_info);

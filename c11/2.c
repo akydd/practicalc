@@ -10,6 +10,8 @@
  *    		    I created a function to tell the time difference of two
  *    		    datetimes.  Function is called diff_in_minutes.
  *
+ * 		    To build: gcc -o2 2.c datetime.c -I -Wall
+ *
  *        Version:  1.0
  *        Created:  11-12-18 06:07:35 PM
  *       Revision:  none
