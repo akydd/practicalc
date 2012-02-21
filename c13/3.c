@@ -95,7 +95,7 @@ void usage(void)
 {
 	(void)printf("Usage: %s ", program_name);
 	(void)printf("[inputfile] [div3] [other]\n");
-	(void)printf("where [div3] contains numbers divisible by 3, and\n");
-	(void)printf("[div5] contains all other numbers.\n");
+	(void)printf("where [div3] contains numbers divisible by 3, and ");
+	(void)printf("[other] contains all other numbers.\n");
 	exit(8);
 }
