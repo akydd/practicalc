@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void usage(void);
+static void usage(void);
 
 int main (int argc, char *argv[])
 {
@@ -47,9 +47,9 @@ int main (int argc, char *argv[])
 	}
 
 	/* read as ASCII, write as binary */
-	while (fgets(buffer, sizeof(buffer), in_file) != NULL) {
+	while (fgets(buffer, (int)sizeof(buffer), in_file) != NULL) {
 		if (sscanf(buffer, "%d", &number) == 1) {
-			fwrite(&number, 1, sizeof(int), out_file);
+			(void)fwrite(&number, 1, sizeof(int), out_file);
 		}
 	}
 
@@ -61,5 +61,5 @@ int main (int argc, char *argv[])
 void usage()
 {
 	(void)printf("Use it properly!\n");
-	exit(8);
+	exit(EXIT_FAILURE);
 }
