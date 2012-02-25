@@ -18,7 +18,7 @@
 
 
 struct header {
-	char type[4];
+	char type[5];
 	int version;
 	int num_records;
 };
