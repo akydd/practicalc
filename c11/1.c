@@ -36,92 +36,118 @@ struct profile {
 	char postal_code[7];
 };
 
-struct profile profile_list[MAX_RECORDS - 1];
+struct profile *profile_list[MAX_RECORDS - 1];
 
 static int profilecmp(const void *, const void *);
-static void print_profiles(void);
+static void print_profile(struct profile *);
+static struct profile *create_profile(char *, char *, char*, char*,
+		char*, char*, char*);
+static void free_profile(struct profile *);
+
+/*
+ * Create a new struct profile and return ptr to it
+ */
+struct profile *create_profile(char *fname, char *lname, char *address1,
+		char *address2, char *city, char *province, char *postal)
+{
+	struct profile *the_profile = malloc(sizeof(struct profile));
+
+	if (the_profile != NULL) {	
+		strncpy(the_profile->fname, fname, 60);
+		strncpy(the_profile->lname, lname, 60);
+		strncpy(the_profile->address1, address1, 60);
+		strncpy(the_profile->address2, address2, 60);
+		strncpy(the_profile->city, city, 60);
+		strncpy(the_profile->province, province, 60);
+		strncpy(the_profile->postal_code, postal, 7);
+	}
+
+	/*@null@*/
+	return the_profile;
+}
+
+
+/* 
+ * free allocated memory for the struct profile
+ */
+void free_profile(struct profile *the_profile)
+{
+	free(the_profile);
+}	
+
 
 /*
  * Sort profiles based on last name, then first name, then address1.
  */
 int profilecmp(const void *a, const void *b)
 {
-	struct profile *ia = (struct profile *)a;
-	struct profile *ib = (struct profile *)b;
+	struct profile **ia = (struct profile **)a;
+	struct profile **ib = (struct profile **)b;
 
 	/* try the last name */
-	int cmp = strcmp((*ia).lname, (*ib).lname);
+	int cmp = strcmp((**ia).lname, (**ib).lname);
 
 	if (cmp == 0) {
 		/* if last names are equal, try first name */
-		cmp = strcmp((*ia).fname, (*ib).fname);
+		cmp = strcmp((**ia).fname, (**ib).fname);
 		if (cmp == 0) {
 			/* still no luck?  Try address. */
-			cmp = strcmp((*ia).address1, (*ib).address2);
+			cmp = strcmp((**ia).address1, (**ib).address2);
 		}
 	}
 
 	return cmp;
 }
 
-void print_profiles(void)
+
+/* 
+ * print a struct profile *
+ */
+void print_profile(struct profile *the_profile)
 {
-	int i;
-	for (i = 0; i < MAX_RECORDS; i++) {
-		(void)printf("First Name: %s\n", profile_list[i].fname);
-		(void)printf("Last Name: %s\n", profile_list[i].lname);
-		(void)printf("Address1: %s\n", profile_list[i].address1);
+	(void)printf("First Name: %s\n", the_profile->fname);
+	(void)printf("Last Name: %s\n", the_profile->lname);
+	(void)printf("Address1: %s\n", the_profile->address1);
 
-		if (strlen(profile_list[i].address2) > 0) {
-			(void)printf("Address2: %s\n",
-					profile_list[i].address2);
-		}
-
-		(void)printf("City: %s\n", profile_list[i].city);
-		(void)printf("Province: %s\n", profile_list[i].province);
-		(void)printf("Postal Code: %s\n", profile_list[i].postal_code);
-		(void)printf("===============================\n\n");
+	if (strlen(the_profile->address2) > 0) {
+		(void)printf("Address2: %s\n",
+			the_profile->address2);
 	}
+
+	(void)printf("City: %s\n", the_profile->city);
+	(void)printf("Province: %s\n", the_profile->province);
+	(void)printf("Postal Code: %s\n", the_profile->postal_code);
+	(void)printf("===============================\n\n");
 }
+
 
 int main(void)
 {
 	/* here are some profile records */
-	strcpy(profile_list[0].fname, "Mrs");
-	strcpy(profile_list[0].lname, "Kydd");
-	strcpy(profile_list[0].address1, "1428-330 Fake Street");
-	strcpy(profile_list[0].city, "Edmonton");
-	strcpy(profile_list[0].province, "Alberta");
-	strcpy(profile_list[0].postal_code, "A1B2C3");
-
-	strcpy(profile_list[1].fname, "Mr");
-	strcpy(profile_list[1].lname, "Kydd");
-	strcpy(profile_list[1].address1, "94 Fake Street");
-	strcpy(profile_list[1].city, "Edmonton");
-	strcpy(profile_list[1].province, "Alberta");
-	strcpy(profile_list[1].postal_code, "A1B2C3");
-	
-	strcpy(profile_list[2].fname, "Mr");
-	strcpy(profile_list[2].lname, "Kydd");
-	strcpy(profile_list[2].address1,"43 Fake Street");
-	strcpy(profile_list[2].city, "Sherwood Park");
-	strcpy(profile_list[2].province, "Alberta");
-	strcpy(profile_list[2].postal_code, "D4E5F6");
-
-	strcpy(profile_list[3].fname, "Leeroy");
-	strcpy(profile_list[3].lname, "Jenkins");
-	strcpy(profile_list[3].address1,"1943 Fake Avenue");
-	strcpy(profile_list[3].address2, "Apt 123");
-	strcpy(profile_list[3].city, "Sherwood Park");
-	strcpy(profile_list[3].province, "Alberta");
-	strcpy(profile_list[3].postal_code, "D4E5F6");
+	profile_list[0] = create_profile("Mrs", "Kydd", "1428-330 Fake Street",
+			"Unit 1428", "Edmonton", "Alberta", "A1B2C3");
+	profile_list[1] = create_profile("Mr", "Kydd", "94 Fake Street",
+			"Unit 505", "Edmonton", "Alberta", "A1B2C3");
+	profile_list[2] = create_profile("Mr", "Kydd", "43 Fake Street",
+			"Unit 227", "Sherwood Park", "Alberta", "D4E5F6");
+	profile_list[3] = create_profile("Leeroy", "Jenkins",
+			"1943 Fake Avenue", "Apt 123", "Sherwood Park",
+			"Alberta", "D4E5F6");
 
 	/* sort the profiles */
-	(void)qsort(&profile_list, MAX_RECORDS, sizeof(struct profile),
+	(void)qsort(&profile_list, MAX_RECORDS, sizeof(struct profile *),
 			profilecmp);
-
+	
 	/* print them out! */
-	(void)print_profiles();
+	int i = 0;
+	for(i = 0; i < MAX_RECORDS; i++) {
+		(void)print_profile(profile_list[i]);
+	}
 
+	/* free memory */
+	for(i = 0; i < MAX_RECORDS; i++) {
+		(void)free_profile(profile_list[i]);
+	}
+	
 	return 0;
 }
