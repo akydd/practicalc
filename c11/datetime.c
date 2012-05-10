@@ -24,16 +24,16 @@ int days_per_month[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 /*
  * Function to print the datetime, nicely formatted.
  */
-void print_datetime(struct datetime a)
+void print_datetime(const struct datetime *a)
 {
 	(void)printf("%d-%d-%d, %d:%d",
-			a.year, a.month, a.day, a.hour, a.minute);
+			a->year, a->month, a->day, a->hour, a->minute);
 }
 
 /**
  * function returns the difference, in minutes, between two datetime structs.
  */
-int diff_in_minutes(struct datetime a, struct datetime b)
+int diff_in_minutes(const struct datetime *a, const struct datetime *b)
 {
 	int minutes = 0;
 
@@ -44,11 +44,11 @@ int diff_in_minutes(struct datetime a, struct datetime b)
 	 */
 
 	/* subtract earlier year from later */
-	if (a.year > b.year) {
+	if (a->year > b->year) {
 		minutes += minutes_between_years(a, b);
 		minutes += minutes_in_year(a);
 		minutes -= minutes_in_year(b);
-	} else if (b.year > a.year) {
+	} else if (b->year > a->year) {
 		minutes += minutes_between_years(b, a);
 		minutes += minutes_in_year(b);
 		minutes -= minutes_in_year(a);
@@ -64,13 +64,13 @@ int diff_in_minutes(struct datetime a, struct datetime b)
  * Assuming years are equal, function returns the difference, in minutes,
  * between to datetime structs.
  */
-int minutes_between_months(struct datetime a, struct datetime b)
+int minutes_between_months(const struct datetime *a, const struct datetime *b)
 {
 	/* subtract minutes up to the recent month
 	 * from minutes up to theearlier month */
-	if (a.month > b.month) {
+	if (a->month > b->month) {
 		return minutes_between(a, b);
-	} else if (b.month > a.month) {
+	} else if (b->month > a->month) {
 		return minutes_between(b, a);
 	}
 
@@ -82,13 +82,13 @@ int minutes_between_months(struct datetime a, struct datetime b)
  * Assuming months and years are equal, function returns the difference,
  * in minutes, between two datetime structs
  */
-int minutes_between_days(struct datetime a, struct datetime b)
+int minutes_between_days(const struct datetime *a, const struct datetime *b)
 {
 	/* subtract minutes up to most recent day
 	 * from minutes up to the earlier day */
-	if (a.day > b.day) {
+	if (a->day > b->day) {
 		return minutes_between(a, b);
-	} else if (b.day > a.day) {
+	} else if (b->day > a->day) {
 		return minutes_between(b, a);
 	} 
 
@@ -100,13 +100,13 @@ int minutes_between_days(struct datetime a, struct datetime b)
  * Assuming days, months, and years are equal, function returns the difference,
  * in minutes, between two datetime structs.
  */
-int minutes_between_hours(struct datetime a, struct datetime b)
+int minutes_between_hours(const struct datetime *a, const struct datetime *b)
 {
 	/* subtract minutes up to the earlier hour
 	 * from minutes up to the later hour */
-	if (a.hour > b.hour) {
+	if (a->hour > b->hour) {
 		return minutes_between(a, b);
-	} else if (b.hour > a.hour) {
+	} else if (b->hour > a->hour) {
 		return minutes_between(b, a);
 	}
 
@@ -118,17 +118,17 @@ int minutes_between_hours(struct datetime a, struct datetime b)
  * Assuming hours, days, months, and years are equal, function returns the
  * difference, in minutes, between two datetime structs.
  */
-int minutes_between_minutes(struct datetime a, struct datetime b)
+int minutes_between_minutes(const struct datetime *a, const struct datetime *b)
 {
 	/* subtract earlier minutes from later minutes */
-	if (a.minute > b.minute) {
+	if (a->minute > b->minute) {
 		return minutes_between(a, b);
 	}
 
 	return minutes_between(b, a);
 }
 
-int minutes_between(struct datetime a, struct datetime b)
+int minutes_between(const struct datetime *a, const struct datetime *b)
 {
 	return minutes_in_year(a) - minutes_in_year(b);
 }
@@ -137,12 +137,12 @@ int minutes_between(struct datetime a, struct datetime b)
  * Returns the number of minutes passed from the start of year b to the start
  * of year a.
  */
-int minutes_between_years(struct datetime a, struct datetime b)
+int minutes_between_years(const struct datetime *a, const struct datetime *b)
 {
 	int days = 0;
 	int i;
 
-	for(i = b.year; i < a.year; i++) {
+	for(i = b->year; i < a->year; i++) {
 		if (is_leap_year(i) == 1) {
 			days += 366;
 		} else {
@@ -156,14 +156,14 @@ int minutes_between_years(struct datetime a, struct datetime b)
  * Function returns the number of minutes elapsed in one year, up to the given
  * datetime of that same year.
  */
-int minutes_in_year(struct datetime a)
+int minutes_in_year(const struct datetime *a)
 {
 	int days = 0;
 	int i;
 
-	for(i = 1; i < a.month; i++) {
+	for(i = 1; i < a->month; i++) {
 		/* add extra day if it's february and a leap year */
-		if ((is_leap_year(a.year) == 1) && (i == 2)) {
+		if ((is_leap_year(a->year) == 1) && (i == 2)) {
 			days += 29;
 		} else {
 			days += days_per_month[i - 1];
@@ -171,12 +171,12 @@ int minutes_in_year(struct datetime a)
 	}
 
 	/* add remaining days - 1 */ 
-	days += (a.day - 1);
+	days += (a->day - 1);
 
 	/* all the minutes = minutes for days - 1
 	 *  + hours & minutes for last day
 	 */
-	return (days * 24 * 60) + a.hour * 60 + a.minute;
+	return (days * 24 * 60) + a->hour * 60 + a->minute;
 }
 
 /**

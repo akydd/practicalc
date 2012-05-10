@@ -34,22 +34,22 @@ int main(void)
 	struct datetime e = { 2012, 12, 20, 22, 16 };
 
 	(void)printf("Test for same date.\n");
-	(void)printf("Minutes diff is %d.\n", diff_in_minutes(a, a));
+	(void)printf("Minutes diff is %d.\n", diff_in_minutes(&a, &a));
 
 	(void)printf("Test for day difference.\n");
-	(void)printf("Minutes diff is %d.\n", diff_in_minutes(a, c));
-	(void)printf("Other way is %d.\n", diff_in_minutes(c, a));
+	(void)printf("Minutes diff is %d.\n", diff_in_minutes(&a, &c));
+	(void)printf("Other way is %d.\n", diff_in_minutes(&c, &a));
 
 	(void)printf("Test for year difference.\n");
-	(void)printf("Minutes diff is %d.\n", diff_in_minutes(a, b));
-	(void)printf("Other way is %d.\n", diff_in_minutes(b, a));
+	(void)printf("Minutes diff is %d.\n", diff_in_minutes(&a, &b));
+	(void)printf("Other way is %d.\n", diff_in_minutes(&b, &a));
 
 	(void)printf("Test for hour difference.\n");
-	(void)printf("Minutes diff is %d.\n", diff_in_minutes(c, d));
-	(void)printf("Other way is %d.\n", diff_in_minutes(d, c));
+	(void)printf("Minutes diff is %d.\n", diff_in_minutes(&c, &d));
+	(void)printf("Other way is %d.\n", diff_in_minutes(&d, &c));
 
 	(void)printf("Test year diff with a leap year:\n");
-	(void)printf("Minutes diff is %d.\n", diff_in_minutes(d, e));
+	(void)printf("Minutes diff is %d.\n", diff_in_minutes(&d, &e));
 	(void)printf("An extra day would add %d minutes.\n", 24*60);
 	return 0;
 }

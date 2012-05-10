@@ -23,13 +23,13 @@ struct datetime {
 	int minute;
 };
 
-void print_datetime(struct datetime);
-int diff_in_minutes(struct datetime, struct datetime);
-int minutes_between_years(struct datetime, struct datetime);
-int minutes_between_months(struct datetime, struct datetime);
-int minutes_between_days(struct datetime, struct datetime);
-int minutes_between_hours(struct datetime, struct datetime);
-int minutes_between_minutes(struct datetime, struct datetime);
-int minutes_between(struct datetime, struct datetime);
-int minutes_in_year(struct datetime);
+void print_datetime(const struct datetime *);
+int diff_in_minutes(const struct datetime *, const struct datetime *);
+int minutes_between_years(const struct datetime *, const struct datetime *);
+int minutes_between_months(const struct datetime *, const struct datetime *);
+int minutes_between_days(const struct datetime *, const struct datetime *);
+int minutes_between_hours(const struct datetime *, const struct datetime *);
+int minutes_between_minutes(const struct datetime *, const struct datetime *);
+int minutes_between(const struct datetime *, const struct datetime *);
+int minutes_in_year(const struct datetime *);
 int is_leap_year(int);
