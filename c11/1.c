@@ -39,7 +39,7 @@ struct profile {
 struct profile *profile_list[MAX_RECORDS - 1];
 
 static int profilecmp(const void *, const void *);
-static void print_profile(struct profile *);
+static void print_profile(const struct profile *);
 static struct profile *create_profile(char *, char *, char*, char*,
 		char*, char*, char*);
 static void free_profile(struct profile *);
@@ -103,7 +103,7 @@ int profilecmp(const void *a, const void *b)
 /* 
  * print a struct profile *
  */
-void print_profile(struct profile *the_profile)
+void print_profile(const struct profile *the_profile)
 {
 	(void)printf("First Name: %s\n", the_profile->fname);
 	(void)printf("Last Name: %s\n", the_profile->lname);
