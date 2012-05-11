@@ -23,7 +23,7 @@
 #include "flight_info.h"
 #define MAX_FLIGHTS 4
 
-static struct flight_info flights[MAX_FLIGHTS];
+static struct flight_info *flights[MAX_FLIGHTS];
 
 int is_quit(char *code)
 {
@@ -39,7 +39,7 @@ void search_flights(char *dept_code)
 {
 	int i;
 	for (i = 0; i < MAX_FLIGHTS; i++) {
-		if (strcmp(flights[i].origin, dept_code) == 0) {
+		if (strcmp(flights[i]->origin, dept_code) == 0) {
 			print_flight_info(flights[i]);
 		}
 	}
@@ -69,41 +69,18 @@ int main(void)
 	char dept_code_2[20];
 
 	/* test data */
-	struct flight_info flight_0 = {
-		"WS 1423",
-		"LAX",
-		"YEG",
-		{2011, 12, 25, 14, 9},
-		{2011, 12, 25, 6, 25}
-	};
-	flights[0] = flight_0;
-
-	struct flight_info flight_1 = {
-		"WS 1487",
-		"LAS",
-		"YEG",
-		{2011, 12, 25, 19, 50},
-		{2011, 12, 25, 23, 55}
-	};
-	flights[1] = flight_1;
-
-	struct flight_info flight_2 = {
-		"TACAT 4024",
-		"YYC",
-		"YEG",
-		{2011, 12, 25, 22, 0},
-		{2011, 12, 25, 22, 54}
-	};
-	flights[2] = flight_2;
-
-	struct flight_info flight_3 = {
-		"WS 145",
-		"YYC",
-		"YEG",
-		{2011, 12, 25, 22, 30},
-		{2011, 12, 25, 23, 19}
-	};
-	flights[3] = flight_3;
+	flights[0] = create_flight_info("WS 1423", "LAX", "YEG",
+			2011, 12, 25, 14, 9,
+		       	2011, 12, 25, 6, 25);	
+	flights[1] = create_flight_info("WS 1487", "LAS", "YEG",
+			2011, 12, 25, 19, 50,
+			2011, 12, 25, 23, 55);
+	flights[2] = create_flight_info("TACAT 4024", "YYC", "YEG", 
+			2011, 12, 25, 22, 0,
+			2011, 12, 25, 22, 54);
+	flights[3] = create_flight_info("WS 145", "YYC", "YEG",
+			2011, 12, 25, 22, 30,
+			2011, 12, 25, 23, 19);
 
 	while (1 == 1) {
 		(void)printf("Enter first departure code, 'Q' to quit: ");

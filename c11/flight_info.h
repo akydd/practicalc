@@ -26,8 +26,13 @@ struct flight_info {
 	char flight[15];
 	char origin[4];
 	char destination[4];
-	struct datetime depart_dt;
-	struct datetime arrival_dt;
+	struct datetime *depart_dt;
+	struct datetime *arrival_dt;
 };
 
-void print_flight_info(struct flight_info);
+void print_flight_info(const struct flight_info *);
+
+struct flight_info *create_flight_info(char *, char *, char *, int, int, int,
+	       int, int, int, int, int, int, int);
+
+void free_flight_info(struct flight_info *);
