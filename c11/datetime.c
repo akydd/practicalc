@@ -16,6 +16,7 @@
  * =============================================================================
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include "datetime.h"
 
 /* array stored #days/month for non leap-years */
@@ -212,3 +213,19 @@ int is_leap_year(int year)
 	return leap_year_bool;
 }
 
+struct datetime *create_datetime(const int year, const int month, const int day,
+		const int hour, const int minute)
+{
+	struct datetime *the_datetime = malloc(sizeof(struct datetime));
+	the_datetime->year = year;
+	the_datetime->month = month;
+	the_datetime->day = day;
+	the_datetime->hour = hour;
+	the_datetime->minute = minute;
+	return the_datetime;
+}
+
+void free_datetime(struct datetime *the_datetime)
+{
+	free(the_datetime);
+}

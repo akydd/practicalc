@@ -1,7 +1,7 @@
 /*
  * =============================================================================
  *
- *       Filename:  2.h
+ *       Filename:  datetime.h
  *
  *    Description:  Define a struct for datetime.
  *
@@ -33,3 +33,6 @@ int minutes_between_minutes(const struct datetime *, const struct datetime *);
 int minutes_between(const struct datetime *, const struct datetime *);
 int minutes_in_year(const struct datetime *);
 int is_leap_year(int);
+struct datetime *create_datetime(const int, const int, const int, const int,
+		const int);
+void free_datetime(struct datetime *);
