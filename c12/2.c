@@ -20,11 +20,13 @@
  * =============================================================================
  */
 #include <stdio.h>
+#include <ctype.h>
 
 static char *find_nonwhite_char(char *p)
 {
 	while (*p != '\0') {
-		if ((*p != '\n') && (*p != '\t') && (*p != ' ')) {
+		/* use isspace(int) */
+		if (isspace((int)*p) == 0) {
 			return p;
 		}
 		p++;
