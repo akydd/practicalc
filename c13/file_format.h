@@ -3,8 +3,11 @@
  *
  *       Filename:  file_format.h
  *
- *    Description:  Defines binary file format for storing mailing labels
- *
+ *    Description:  Defines binary file format for storing mailing labels.
+ *    		    struct header is the file header.
+ *    		    struct profile, from previous exercises, will be used to
+ *    		    store person data.
+ *		    
  *        Version:  1.0
  *        Created:  12-02-24 11:03:09 PM
  *       Revision:  none
@@ -23,14 +26,4 @@ struct header {
 	int num_records;
 };
 
-struct record {
-	char first_name[30];
-	char last_name[30];
-	char street1[50];
-	char street2[50];
-	char municipality[50];
-	char country[50];
-	char province[50];
-	char postal_code[10];
-};
-
+struct header *create_header(const char *, const int, const int);
