@@ -217,11 +217,16 @@ struct datetime *create_datetime(const int year, const int month, const int day,
 		const int hour, const int minute)
 {
 	struct datetime *the_datetime = malloc(sizeof(struct datetime));
-	the_datetime->year = year;
-	the_datetime->month = month;
-	the_datetime->day = day;
-	the_datetime->hour = hour;
-	the_datetime->minute = minute;
+
+	if (the_datetime != NULL) {
+		the_datetime->year = year;
+		the_datetime->month = month;
+		the_datetime->day = day;
+		the_datetime->hour = hour;
+		the_datetime->minute = minute;
+	} else {
+		exit(EXIT_FAILURE);
+	}
 	return the_datetime;
 }
 

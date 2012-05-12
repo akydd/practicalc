@@ -57,6 +57,7 @@ int main(void)
 	free_datetime(b);
 	free_datetime(c);
 	free_datetime(d);
+	free_datetime(e);
 
 	return 0;
 }

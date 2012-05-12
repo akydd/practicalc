@@ -15,6 +15,13 @@
  *
  * =============================================================================
  */
+
+/* 
+ * #pragma once ensures that defs aren't loaded twice (flight_info.h and 
+ * flight_info.c both include datetime.h)
+ */
+#pragma once
+
 struct datetime {
 	int year;
 	int month;

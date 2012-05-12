@@ -85,14 +85,14 @@ int main(void)
 	while (1 == 1) {
 		(void)printf("Enter first departure code, 'Q' to quit: ");
 		get_airport_code(dept_code_1);
-		if (is_quit(dept_code_1)) {
+		if (is_quit(dept_code_1) == 1) {
 			(void)printf("Bye!\n");
 			break;
 		}
 
 		(void)printf("Enter second departure code, 'Q' to quit: ");
 		get_airport_code(dept_code_2);
-		if (is_quit(dept_code_2)) {
+		if (is_quit(dept_code_2) == 1) {
 			(void)printf("Bye!\n");
 			break;
 		}
@@ -103,5 +103,12 @@ int main(void)
 		(void)printf("Seearching for %s...\n", dept_code_2);
 		search_flights(dept_code_2);
 	}
+
+	/* clear allocated mem */
+	int i;
+	for(i = 0; i < MAX_FLIGHTS; i++) {
+		free_flight_info(flights[i]);
+	}
+
 	return 0;
 }

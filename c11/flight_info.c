@@ -16,8 +16,10 @@
  * =============================================================================
  */
 #include <stdio.h>
-#include "flight_info.h"
+#include <stdlib.h>
+#include <string.h>
 #include "datetime.h"
+#include "flight_info.h"
 
 void free_flight_info(struct flight_info *the_flight)
 {
@@ -27,26 +29,33 @@ void free_flight_info(struct flight_info *the_flight)
 }
 
 struct flight_info *create_flight_info(char *flight, char *origin, char *destination,
-		int d_yaer, int d_month, int d_day, int d_hour, int d_min,
+		int d_year, int d_month, int d_day, int d_hour, int d_min,
 		int a_year, int a_month, int a_day, int a_hour, int a_min)
 {
 	struct flight_info *the_flight = malloc(sizeof(struct flight_info));
-
-	struct datetime *depart_dt = create_datetime(d_year, d_month, d_day, 
+	
+	if (the_flight != NULL) {
+		struct datetime *depart_dt = 
+			create_datetime(d_year, d_month, d_day, 
 			d_hour, d_min);
-	struct datetime *arrival_dt = create_datetime(a_year, a_month, a_day,
+		struct datetime *arrival_dt = 
+			create_datetime(a_year, a_month, a_day,
 			a_hour, a_min);
-	flight_info->depart_dt = depart_dt;
-	flight_info->arrival_dt = arrival_dt;
 
-	flight_info->flight = flight;
-	flight_info->origin = origin;
-	flight_info->destination = destination;
+		the_flight->depart_dt = depart_dt;
+		the_flight->arrival_dt = arrival_dt;
 
-	return flight_info;
+		strncpy(the_flight->flight, flight, 15);
+		strncpy(the_flight->origin, origin, 4);
+		strncpy(the_flight->destination, destination, 4);
+	} else {
+		exit(EXIT_FAILURE);
+	}
+
+	return the_flight;
 }
 
-void print_flight_info(struct flight_info *the_flight)
+void print_flight_info(const struct flight_info *the_flight)
 {
 	(void)printf("Flight into starts =>\n");
 	(void)printf("Flight %s\n", the_flight->flight);
