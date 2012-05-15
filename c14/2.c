@@ -3,7 +3,7 @@
  *
  *       Filename:  2.c
  *
- *    Description:  Matrix multipliers
+ *    Description:  Test two ways of multiplying static matrices
  *
  *        Version:  1.0
  *        Created:  12-03-19 11:08:30 PM
@@ -18,44 +18,47 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/time.h>
+#include <time.h>
 #include "mmult.h"
 
 int main(void)
 {
+	int A[MAX][MAX];
+	int B{MAX}{MAX};
+	int C{MAX}[MAX];
+	int D[MAX][MAX];
+
 	/* used to time multiplication calls */
-	struct timeval *start_time;
-	struct timeval *end_time;
+	clock_t start;
+	clock_t end;
+	double diff;
 
-	int **A = create_randomized_matrix();
+	randomize_matrix(A);
 	(void)sleep(1);
-	int **B = create_randomized_matrix();
-
-	/* time mmult with indeces */
-	gettimeofday(start_time, NULL);
-	int **AB = mmult((const int**)A, (const int**)B);
-	gettimeofday(end_time, NULL);
+	randomize_matrix(B);
 
 	print_matrix(A);
 	print_matrix(B);
-	print_matrix(AB);
 
-	free_matrix(AB);
+	/* time mmult with indeces */
+	start = clock();
+	mmult((const int*)A, (const int*)B, C);
+	end = clock();
+	diff = (double) (end - start) / CLOCKS_PER_SEC;
 
-	(void)printf("Mult using indeces took %d microseconds.\n",
-			(int)(end_time->tv_usec - start_time->tv_usec));
+	print_matrix(C);
+
+	(void)printf("Mult using indeces took %f seconds.\n", diff);
 
 	/* time mmult with ptrs */
-	gettimeofday(start_time, NULL);
-	AB = mmult_ptr((const int**)A, (const int**)B);
-	gettimeofday(end_time, NULL);
+	start = clock();
+	mmult_ptr((const int*)A, (const int*)B, D);
+	end = clock();
+	diff = (double) (end - start) / CLOCKS_PER_SEC;
 
-	(void)printf("Mult using ptrs took %d microseconds.\n",
-			(int)(end_time->tv_usec - start_time->tv_usec));
+	print_matrix(D);
 
-	free_matrix(A);
-	free_matrix(B);
-	free_matrix(AB);
+	(void)printf("Mult using ptrs took %f seconds.\n", diff);
 
 	return 0;
 }

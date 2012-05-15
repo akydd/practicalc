@@ -23,94 +23,45 @@
 #include <math.h>
 #include "mmult.h"
 
-void free_matrix(int **matrix)
+void identity_matrix(int *A)
 {
-	int i;
-	for (i = 0; i < MAX; i++) {
-		free(matrix[i]);
+	int *A_ptr;
+
+	zero_matrix(A);
+
+	for(A_ptr = A; A_ptr <= A + (MAX - 1) + (MAX - 1); A_ptr += MAX + 2) {
+		*A_ptr = 1;
 	}
-	free(matrix);
 }
 
-int **create_empty_matrix(void)
+void zero_matrix(int *A)
 {
-	int i;
-	/* must initialize as int **, not as int [][] */
-	/* First allocate memory for an int * to each row */
-	int **matrix = malloc(sizeof(int *) * MAX);
-	
-	if (matrix == NULL) {
-		exit(EXIT_FAILURE);
-	}
-	
-	/* Then for each row, allocate enough memory for all the cols */
-	for(i = 0; i < MAX; i++) {
-		matrix[i] = malloc(sizeof(int) * MAX);
-		if (matrix[i] == NULL) {
-			exit(EXIT_FAILURE);
-		}
-	}
+	int *A_ptr;
 
-	return matrix;
+	for(A_ptr = A; A_ptr <= A + (MAX - 1) * (MAX - 1); A_ptr++) {
+		*A_ptr = 0;
+	}
 }
 
-int **create_identity_matrix(void)
+void randomize_matrix(int *A)
 {
-	int **matrix = create_empty_matrix();
-	int i;
-	int j;
+	int *A_ptr;
+	int limit;
 
-	for (i = 0; i < MAX; i++) {
-		for (j = 0; j < MAX; j++) {
-			if (i == j) {
-				matrix[i][j] = 1;
-			} else {
-				matrix[i][j] = 0;
-			}
-		}
-	}
-	return matrix;
-}
-
-int **create_zero_matrix(void)
-{
-	int **matrix = create_empty_matrix();
-	int i;
-	int j;
-
-	for (i = 0; i < MAX; i++) {
-		for (j = 0; j < MAX; j++) {
-			matrix[i][j] = 0;
-		}
-	}
-	return matrix;
-}
-
-int **create_randomized_matrix(void)
-{
-	int i;
-	int j;
-	int **matrix = create_empty_matrix();
 	/* this limit should help avoid int overflows */
-	int limit = (int)floor(sqrt(INT_MAX / (float)MAX));
+	limit = (int)floor(sqrt(INT_MAX / (float)MAX));
 
 	/* seed for rand */
 	srand(time(NULL));
 
-	for (i = 0; i < MAX; i++) {
-		for (j = 0; j < MAX; j++) {
-			/* ensure random sumber is within limit */
-			matrix[i][j] =
-				(int)floor(rand() * (limit / (float)RAND_MAX));
-		}
+	for(A_ptr = A; A_ptr <= A + (MAX - 1) * (MAX - 1); A_ptr++) {
+		/* ensure random sumber is within limit */
+		*A_ptr = (int)floor(rand() * (limit / (float)RAND_MAX));
 	}
-	return matrix;
 }
 
-int **mmult(const int **A, const int **B)
+void mmult(const int *A, const int *B, int *C)
 {
-	int **AB = create_empty_matrix();
-
 	int i;
 	int j;
 	int k;
@@ -124,16 +75,13 @@ int **mmult(const int **A, const int **B)
 			AB[i][j] = sum;
 		}
 	}
-	return AB;
 }
 
-int **mmult_ptr(const int **A, const int **B)
+void mmult_ptr(const int *A, const int *B, int *C)
 {
-	/* TODO: implement this */
-	return mmult(A, B);
 }
 
-void print_matrix(int **A)
+void print_matrix(int *A)
 {
 	int i;
 	int j;
@@ -151,3 +99,4 @@ void print_matrix(int **A)
 	}
 	(void)printf("\n");
 }
+
