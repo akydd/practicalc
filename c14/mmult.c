@@ -23,27 +23,27 @@
 #include <math.h>
 #include "mmult.h"
 
-void identity_matrix(int *A)
+void identity_matrix(int (*A)[MAX])
 {
 	int *A_ptr;
 
 	zero_matrix(A);
 
-	for(A_ptr = A; A_ptr <= A + (MAX - 1) + (MAX - 1); A_ptr += MAX + 2) {
+	for(A_ptr = *A; A_ptr <= *A + (MAX * MAX) - 1; A_ptr += MAX + 1) {
 		*A_ptr = 1;
 	}
 }
 
-void zero_matrix(int *A)
+void zero_matrix(int (*A)[MAX])
 {
 	int *A_ptr;
 
-	for(A_ptr = A; A_ptr <= A + (MAX - 1) * (MAX - 1); A_ptr++) {
+	for(A_ptr = *A; A_ptr <= *A + (MAX * MAX) - 1; A_ptr++) {
 		*A_ptr = 0;
 	}
 }
 
-void randomize_matrix(int *A)
+void randomize_matrix(int (*A)[MAX])
 {
 	int *A_ptr;
 	int limit;
@@ -54,13 +54,13 @@ void randomize_matrix(int *A)
 	/* seed for rand */
 	srand(time(NULL));
 
-	for(A_ptr = A; A_ptr <= A + (MAX - 1) * (MAX - 1); A_ptr++) {
+	for(A_ptr = *A; A_ptr <= *A + (MAX * MAX) - 1; A_ptr++) {
 		/* ensure random sumber is within limit */
 		*A_ptr = (int)floor(rand() * (limit / (float)RAND_MAX));
 	}
 }
 
-void mmult(const int *A, const int *B, int *C)
+void mmult(const int (*A)[MAX], const int (*B)[MAX], int (*C)[MAX])
 {
 	int i;
 	int j;
@@ -68,34 +68,39 @@ void mmult(const int *A, const int *B, int *C)
 
 	for(i = 0; i < MAX; i++) {
 		for(j = 0; j < MAX; j++) {
-			int sum = 0;
+			C[i][j] = 0;
 			for(k = 0; k < MAX; k++) {
-				sum += A[i][k] * B[k][j];
+				C[i][j] += A[i][k] * B[k][j];
 			}
-			AB[i][j] = sum;
 		}
 	}
 }
 
-void mmult_ptr(const int *A, const int *B, int *C)
+void mmult_ptr(const int (*A)[MAX], const int (*B)[MAX], int (*C)[MAX])
 {
-}
-
-void print_matrix(int *A)
-{
+	int *A_ptr;
+	int *B_ptr;
+	int *C_ptr;
 	int i;
 	int j;
+	int k;
+}
 
-	for (i = 0; i < MAX; i++) {
-		for (j = 0; j < MAX; j++) {
-			if (j == 0) {
-				(void)printf("[");
-			}
-			(void)printf(" %d ", A[i][j]);
-			if (j == (MAX - 1)) {
-				(void)printf("]\n");
-			}
+void print_matrix(int (*A)[MAX])
+{
+	int (*row_ptr)[MAX];
+	int *col_ptr;
+
+	for(row_ptr = A; row_ptr <= A + MAX - 1; row_ptr++) {
+		(void)printf("[");
+
+		for(col_ptr = *row_ptr;
+				col_ptr <= *row_ptr + MAX - 1; col_ptr++) {
+			(void)printf(" %d ", *col_ptr);
+			
 		}
+
+		(void)printf("]\n");
 	}
 	(void)printf("\n");
 }

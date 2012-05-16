@@ -1,4 +1,4 @@
-CFLAGS=-Wall -Wextra -pedantic -DMAX=2
+CFLAGS=-Wall -Wextra -pedantic -DMAX=3
 OBJS=mmult.o 2.o
 
 2: $(OBJS)

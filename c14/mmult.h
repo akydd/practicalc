@@ -21,14 +21,14 @@
 #define MAX 3
 #endif
 
-void identity_matrix(int *);
+void identity_matrix(int (*)[MAX]);
 
-void zero_matrix(int *);
+void zero_matrix(int (*)[MAX]);
 
-void randomize_matrix(int *);
+void randomize_matrix(int (*)[MAX]);
 
-void mmult(const int *, const int *, int *);
+void mmult(const int (*)[MAX], const int (*)[MAX], int (*)[MAX]);
 
-void mmult_ptr(const int *, const int *, int *);
+void mmult_ptr(const int (*)[MAX], const int (*)[MAX], int (*)[MAX]);
 
-void print_matrix(int *);
+void print_matrix(int (*)[MAX]);

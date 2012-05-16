@@ -24,8 +24,8 @@
 int main(void)
 {
 	int A[MAX][MAX];
-	int B{MAX}{MAX};
-	int C{MAX}[MAX];
+	int B[MAX][MAX];
+	int C[MAX][MAX];
 	int D[MAX][MAX];
 
 	/* used to time multiplication calls */
@@ -33,16 +33,18 @@ int main(void)
 	clock_t end;
 	double diff;
 
-	randomize_matrix(A);
+	//randomize_matrix(A);
+	identity_matrix(A);
 	(void)sleep(1);
-	randomize_matrix(B);
+	//randomize_matrix(B);
+	identity_matrix(B);
 
 	print_matrix(A);
 	print_matrix(B);
 
 	/* time mmult with indeces */
 	start = clock();
-	mmult((const int*)A, (const int*)B, C);
+	mmult((const int (*)[MAX])A, (const int (*)[MAX]) B, C);
 	end = clock();
 	diff = (double) (end - start) / CLOCKS_PER_SEC;
 
@@ -52,7 +54,7 @@ int main(void)
 
 	/* time mmult with ptrs */
 	start = clock();
-	mmult_ptr((const int*)A, (const int*)B, D);
+	mmult_ptr((const int (*)[MAX])A, (const int (*)[MAX])B, D);
 	end = clock();
 	diff = (double) (end - start) / CLOCKS_PER_SEC;
 
