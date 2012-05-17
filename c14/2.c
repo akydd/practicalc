@@ -33,14 +33,14 @@ int main(void)
 	clock_t end;
 	double diff;
 
-	//randomize_matrix(A);
-	identity_matrix(A);
+	randomize_matrix(A);
 	(void)sleep(1);
-	//randomize_matrix(B);
-	identity_matrix(B);
+	randomize_matrix(B);
 
+#ifdef DEBUG
 	print_matrix(A);
 	print_matrix(B);
+#endif
 
 	/* time mmult with indeces */
 	start = clock();
@@ -48,9 +48,12 @@ int main(void)
 	end = clock();
 	diff = (double) (end - start) / CLOCKS_PER_SEC;
 
+#ifdef DEBUG
 	print_matrix(C);
+#endif
 
-	(void)printf("Mult using indeces took %f seconds.\n", diff);
+	(void)printf("Mult %d by %d using indeces took %f seconds.\n",
+			MAX, MAX, diff);
 
 	/* time mmult with ptrs */
 	start = clock();
@@ -58,9 +61,12 @@ int main(void)
 	end = clock();
 	diff = (double) (end - start) / CLOCKS_PER_SEC;
 
+#ifdef DEBUG
 	print_matrix(D);
+#endif
 
-	(void)printf("Mult using ptrs took %f seconds.\n", diff);
+	(void)printf("Mult %d by %d using ptrs took %f seconds.\n",
+			MAX, MAX, diff);
 
 	return 0;
 }

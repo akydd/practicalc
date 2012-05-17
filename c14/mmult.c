@@ -84,6 +84,32 @@ void mmult_ptr(const int (*A)[MAX], const int (*B)[MAX], int (*C)[MAX])
 	int i;
 	int j;
 	int k;
+
+	C_ptr = *C;
+	for(i = 0; i < MAX; i++) {
+		for(j = 0; j < MAX; j++) {
+			*C_ptr = 0;
+			A_ptr = *A + i*MAX;
+			B_ptr = *B + j;
+			for(k = 0; k < MAX; k++) {
+				/*
+				(void)printf("*A_ptr = %d\n", *A_ptr);
+				(void)printf("*B_ptr = %d\n", *B_ptr);
+				*/
+				
+				*C_ptr += *A_ptr * *B_ptr;
+
+				A_ptr++;
+				B_ptr += MAX;
+			}
+
+			/*
+			(void)printf("*C_ptr = %d\n", *C_ptr);
+			*/
+
+			C_ptr++;
+		}
+	}
 }
 
 void print_matrix(int (*A)[MAX])
