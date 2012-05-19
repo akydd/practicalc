@@ -1,0 +1,11 @@
+set term png
+set title "Matrix multiplication"
+set output "2.png"
+set xlabel "Size (N x N)"
+set ylabel "Time (s)"
+plot "2.dat" using 1:2 title "Indeces" with linespoints, \
+"2.dat" using 1:3 title "Pointers" with linespoints, \
+"2.dat" using 1:4 title "Indeces, -O3" with linespoints, \
+"2.dat" using 1:5 title "Pointers, -O3" with linespoints, \
+"2.dat" using 1:6 title "Indeces, -O3 -march=i686" with linespoints, \
+"2.dat" using 1:7 title "Pointers, -O3 -march=i686" with linespoints
