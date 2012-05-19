@@ -49,18 +49,19 @@ void randomize_matrix(int (*A)[MAX])
 	int limit;
 
 	/* this limit should help avoid int overflows */
-	limit = (int)floor(sqrt(INT_MAX / (float)MAX));
+	limit = (int)floor(sqrt((double)INT_MAX / (float)MAX));
 
 	/* seed for rand */
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
 	for(A_ptr = *A; A_ptr <= *A + (MAX * MAX) - 1; A_ptr++) {
 		/* ensure random sumber is within limit */
-		*A_ptr = (int)floor(rand() * (limit / (float)RAND_MAX));
+		*A_ptr = (int)floor((double)rand()
+			       	* (limit / (float)RAND_MAX));
 	}
 }
 
-void mmult(const int (*A)[MAX], const int (*B)[MAX], int (*C)[MAX])
+void mmult(int (*A)[MAX], int (*B)[MAX], int (*C)[MAX])
 {
 	int i;
 	int j;
@@ -76,7 +77,7 @@ void mmult(const int (*A)[MAX], const int (*B)[MAX], int (*C)[MAX])
 	}
 }
 
-void mmult_ptr(const int (*A)[MAX], const int (*B)[MAX], int (*C)[MAX])
+void mmult_ptr(int (*A)[MAX], int (*B)[MAX], int (*C)[MAX])
 {
 	int *A_ptr;
 	int *B_ptr;

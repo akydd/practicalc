@@ -16,9 +16,9 @@
  * =============================================================================
  */
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
+/*  #include <unistd.h> */
 #include "mmult.h"
 
 int main(void)
@@ -34,7 +34,7 @@ int main(void)
 	double diff;
 
 	randomize_matrix(A);
-	(void)sleep(1);
+/*  	(void)sleep(1); */
 	randomize_matrix(B);
 
 #ifdef DEBUG
@@ -44,7 +44,7 @@ int main(void)
 
 	/* time mmult with indeces */
 	start = clock();
-	mmult((const int (*)[MAX])A, (const int (*)[MAX]) B, C);
+	mmult(A, B, C);
 	end = clock();
 	diff = (double) (end - start) / CLOCKS_PER_SEC;
 
@@ -57,7 +57,7 @@ int main(void)
 
 	/* time mmult with ptrs */
 	start = clock();
-	mmult_ptr((const int (*)[MAX])A, (const int (*)[MAX])B, D);
+	mmult_ptr(A, B, D);
 	end = clock();
 	diff = (double) (end - start) / CLOCKS_PER_SEC;
 

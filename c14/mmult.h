@@ -27,8 +27,8 @@ void zero_matrix(int (*)[MAX]);
 
 void randomize_matrix(int (*)[MAX]);
 
-void mmult(const int (*)[MAX], const int (*)[MAX], int (*)[MAX]);
+void mmult(int (*)[MAX], int (*)[MAX], int (*)[MAX]);
 
-void mmult_ptr(const int (*)[MAX], const int (*)[MAX], int (*)[MAX]);
+void mmult_ptr(int (*)[MAX], int (*)[MAX], int (*)[MAX]);
 
 void print_matrix(int (*)[MAX]);
