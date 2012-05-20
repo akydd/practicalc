@@ -1,0 +1,8 @@
+set term png
+set title "Counting set bits in a char array"
+set output "4.png"
+set xlabel "Array size"
+set ylabel "Time (s)"
+plot "4.dat" using 1:2 title "Original" with linespoints, \
+"4.dat" using 1:3 title "Compiler optimized -O3" with linespoints, \
+"4.dat" using 1:4 title "Using registered ints" with linespoints
