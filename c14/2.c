@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-/*  #include <unistd.h> */
+#include <unistd.h>
 #include "mmult.h"
 
 int main(void)
@@ -34,7 +34,7 @@ int main(void)
 	double diff;
 
 	randomize_matrix(A);
-/*  	(void)sleep(1); */
+  	(void)sleep(1);
 	randomize_matrix(B);
 
 #ifdef DEBUG
