@@ -37,7 +37,7 @@ void insert(char *word, int line, struct tree_node **node)
 			insert(word, line, &(*node->right));
 		} else {
 			/* insert line & count into linked list */
-			(void)insert(int line, &(*node->references));
+			insert(int line, &(*node->references));
 		}
 	}
 }
@@ -53,7 +53,7 @@ void insert(int line, struct list_node **node)
 		if (line == *node->line) {
 			*node->count++;
 		} else {
-			(void)insert(line, &(*node->next));
+			insert(line, &(*node->next));
 		}
 	}
 }
@@ -66,8 +66,8 @@ void print_tree_node(struct tree_node *node)
 
 	(void)print_tree_node(node->left);
 	(void)printf("Word: %s\n");
-	(void)print_list_node(node->references);
-	(void)print_tree_node(node->right);
+	print_list_node(node->references);
+	print_tree_node(node->right);
 }
 
 void print_list_node(struct list_node *node)
@@ -78,5 +78,5 @@ void print_list_node(struct list_node *node)
 
 	(void)printf("Line: %d\n", node->line);
 	(void)printf("Count: %d\n", node->count);
-	(void)print_list_node(node->next);
+	print_list_node(node->next);
 }
