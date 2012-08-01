@@ -23,19 +23,17 @@
 struct list_node {
 	int line;
 	int count;
-	list_node *next;
+	struct list_node *next;
 };
 
 struct tree_node {
 	char *word;
-	list_node *references;
-	tree_node *left;
-	tree_node *right;
+	struct list_node *references;
+	struct tree_node *left;
+	struct tree_node *right;
 };
 
 void insert(char *, int, struct tree_node **);
-
-void insert(int, struct list_node **);
 
 void print_tree_node(struct tree_node *);
 

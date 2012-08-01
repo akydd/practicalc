@@ -1,4 +1,5 @@
-CFLAGS=-Wall -Wextra -pedantic $(OPTFLAGS)
+CC=gcc
+CFLAGS=-Wall -pedantic -ggdb
 OBJS=cross_ref.o scan.o
 
 scan: $(OBJS)
@@ -8,4 +9,4 @@ cross_ref.o:cross_ref.h cross_ref.c
 scan.o:cross_ref.h scan.c
 
 clean:
-	rm *.o
+	del *.o

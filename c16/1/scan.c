@@ -18,7 +18,10 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "cross_ref.h"
+
+void usage();
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -26,10 +29,10 @@
  *  Description:  
  * =====================================================================================
  */
-int main ( int argc, char *argv[] )
+int main (int argc, char *argv[])
 {
 	FILE *in_file = NULL;
-	struct tree_node **word_tree;
+	struct tree_node *word_tree = NULL;
 	char buffer[200];	/* stores each line from input file */
 	char delimiter[] = " ";
 	char *word;		/* stores each word from the input file */
@@ -41,9 +44,9 @@ int main ( int argc, char *argv[] )
 	}
 
 	/* try to open the text file */
-	in_file = fopen(argv[1], 'r');
+	in_file = fopen(argv[1], "r");
 	if (in_file == NULL) {
-		(void)printf("Cannot open file!");
+		(void)printf("Cannot open file!\n");
 		usage();
 		return EXIT_FAILURE;
 	}
@@ -54,14 +57,14 @@ int main ( int argc, char *argv[] )
 		/* process the words in the buffer */
 		word = strtok(buffer, delimiter);
 		while (word != NULL) {
-			insert(word, i, word_tree);
+			insert(word, i, &word_tree);
 			word = strtok(NULL, delimiter);
 		}
 	}
 	(void)fclose(in_file);
 
 	/* print out the reference */
-	print_tree_node(&word_tree);
+	print_tree_node(word_tree);
 
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */
