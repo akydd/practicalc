@@ -19,10 +19,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "cross_ref.h"
 
 void usage();
-int is_alpha(char);
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -57,18 +57,18 @@ int main (int argc, char *argv[])
 		i++;
 		/* process the words in the buffer */
 		char *search_ptr = line_buffer;
+		char *word_ptr = word_buffer;
 		while (*search_ptr != '\0') {
-			char *word_ptr = word_buffer;
-			if(is_alpha(*search_ptr) == 1) {
+			if(isalpha(*search_ptr) != 0) {
 				*word_ptr = *search_ptr;
 				word_ptr++;
-				if(is_alpha(*(search_ptr + 1)) == 0) {
+				if(isalpha(*(search_ptr + 1)) == 0) {
 					*word_ptr = '\0';
 					insert(word_buffer, i, &word_tree);
 					word_ptr = word_buffer;
 				}
-				search_ptr++;
 			}
+			search_ptr++;
 		}
 	}
 	(void)fclose(in_file);
@@ -91,19 +91,3 @@ void usage ()
 	(void)printf("Usage:\n");
 	(void)printf("scan <filename>");
 }		/* -----  end of function usage  ----- */
-
-
-/* 
- * ===  FUNCTION  ==============================================================
- *         Name:  is_alpha
- *  Description:  
- * =============================================================================
- */
-int is_alpha (char the_char)
-{
-	if (the_char == '\t' || the_char == '\n') {
-		return 1;
-	} else {
-		return 0;
-	}
-}		/* -----  end of function is_alpha  ----- */
