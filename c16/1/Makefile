@@ -9,4 +9,4 @@ cross_ref.o:cross_ref.h cross_ref.c
 scan.o:cross_ref.h scan.c
 
 clean:
-	del *.o
+	rm *.o

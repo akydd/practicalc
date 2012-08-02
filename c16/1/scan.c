@@ -22,6 +22,7 @@
 #include "cross_ref.h"
 
 void usage();
+int is_alpha(char);
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -33,8 +34,8 @@ int main (int argc, char *argv[])
 {
 	FILE *in_file = NULL;
 	struct tree_node *word_tree = NULL;
-	char buffer[200];	/* stores each line from input file */
-	char delimiter[] = " ";
+	char line_buffer[200];	/* stores each line from input file */
+	char word_buffer[20];	/* stores each word, null terminated */
 	char *word;		/* stores each word from the input file */
 	int i = 0;		/* input file line counter.  Count starts at 1. */
 
@@ -52,13 +53,22 @@ int main (int argc, char *argv[])
 	}
 
 	/* read in file by line */
-	while(fgets(buffer, sizeof(buffer), in_file) != NULL) {
+	while(fgets(line_buffer, sizeof(line_buffer), in_file) != NULL) {
 		i++;
 		/* process the words in the buffer */
-		word = strtok(buffer, delimiter);
-		while (word != NULL) {
-			insert(word, i, &word_tree);
-			word = strtok(NULL, delimiter);
+		char *search_ptr = line_buffer;
+		while (*search_ptr != '\0') {
+			char *word_ptr = word_buffer;
+			if(is_alpha(*search_ptr) == 1) {
+				*word_ptr = *search_ptr;
+				word_ptr++;
+				if(is_alpha(*(search_ptr + 1)) == 0) {
+					*word_ptr = '\0';
+					insert(word_buffer, i, &word_tree);
+					word_ptr = word_buffer;
+				}
+				search_ptr++;
+			}
 		}
 	}
 	(void)fclose(in_file);
@@ -81,3 +91,19 @@ void usage ()
 	(void)printf("Usage:\n");
 	(void)printf("scan <filename>");
 }		/* -----  end of function usage  ----- */
+
+
+/* 
+ * ===  FUNCTION  ==============================================================
+ *         Name:  is_alpha
+ *  Description:  
+ * =============================================================================
+ */
+int is_alpha (char the_char)
+{
+	if (the_char == '\t' || the_char == '\n') {
+		return 1;
+	} else {
+		return 0;
+	}
+}		/* -----  end of function is_alpha  ----- */

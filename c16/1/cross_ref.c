@@ -82,9 +82,11 @@ void print_tree_node(struct tree_node *node)
 		return;
 	}
 
-	(void)print_tree_node(node->left);
-	(void)printf("\"%s\" ", node->word);
+	print_tree_node(node->left);
+
+	(void)printf("\"%s\"\n", node->word);
 	print_list_node(node->references);
+	
 	print_tree_node(node->right);
 }
 
@@ -94,7 +96,7 @@ void print_list_node(struct list_node *node)
 		return;
 	}
 
-	(void)printf("appears in line %d, ", node->line);
+	(void)printf("\tappears in line %d, ", node->line);
 	(void)printf("%d time(s).\n", node->count);
 	print_list_node(node->next);
 }
