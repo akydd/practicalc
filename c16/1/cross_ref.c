@@ -21,6 +21,7 @@
 #include <stdlib.h>
 
 void insert_reference(int, struct list_node **);
+void free_list_node(struct list_node **);
 void out_of_memory_so_exit();
 
 void insert(char *word, int line, struct tree_node **node)
@@ -88,6 +89,30 @@ void print_tree_node(struct tree_node *node)
 	print_list_node(node->references);
 	
 	print_tree_node(node->right);
+}
+
+void free_tree_node(struct tree_node **node)
+{
+	if (*node == NULL) {
+		return;
+	}
+
+	free_tree_node(&((*node)->left));
+	/* free up the references first */
+	free_list_node(&((*node)->references));
+	/* then free up the node */
+	(void)free(*node);
+	free_tree_node(&((*node)->right));
+}
+
+void free_list_node(struct list_node **node)
+{
+	if (*node == NULL) {
+		return;
+	}
+
+	free_list_node(&((*node)->next));
+	free(*node);
 }
 
 void print_list_node(struct list_node *node)

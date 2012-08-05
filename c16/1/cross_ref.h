@@ -38,3 +38,5 @@ void insert(char *, int, struct tree_node **);
 void print_tree_node(struct tree_node *);
 
 void print_list_node(struct list_node *);
+
+void free_tree_node(struct tree_node **);

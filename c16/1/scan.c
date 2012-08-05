@@ -36,7 +36,6 @@ int main (int argc, char *argv[])
 	struct tree_node *word_tree = NULL;
 	char line_buffer[200];	/* stores each line from input file */
 	char word_buffer[20];	/* stores each word, null terminated */
-	char *word;		/* stores each word from the input file */
 	int i = 0;		/* input file line counter.  Count starts at 1. */
 
 	if (argc != 2) {
@@ -75,7 +74,7 @@ int main (int argc, char *argv[])
 
 	/* print out the reference */
 	print_tree_node(word_tree);
-
+	free_tree_node(&word_tree);
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */
 
