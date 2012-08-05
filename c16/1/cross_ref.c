@@ -32,7 +32,7 @@ void insert(char *word, int line, struct tree_node **node)
 			out_of_memory_so_exit();
 		}
 		
-		(*node)->word = malloc(sizeof(strlen(word) + 1));
+		(*node)->word = malloc((strlen(word) + 1) * sizeof(char));
 		if ((*node)->word == NULL) {
 			out_of_memory_so_exit();
 		}
@@ -97,12 +97,14 @@ void free_tree_node(struct tree_node **node)
 		return;
 	}
 
+	/* first free each branch */
 	free_tree_node(&((*node)->left));
-	/* free up the references first */
+	free_tree_node(&((*node)->right));
+	/* then free up the internals */
 	free_list_node(&((*node)->references));
+	(void)free((*node)->word);
 	/* then free up the node */
 	(void)free(*node);
-	free_tree_node(&((*node)->right));
 }
 
 void free_list_node(struct list_node **node)
