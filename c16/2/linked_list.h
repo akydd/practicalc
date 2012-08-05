@@ -1,5 +1,5 @@
 /*
- * =====================================================================================
+ * =============================================================================
  *
  *       Filename:  linked_list.h
  *
@@ -13,7 +13,7 @@
  *         Author:  Alan Kydd (), akydd@ualberta.net
  *   Organization:  
  *
- * =====================================================================================
+ * =============================================================================
  */
 
 struct linked_list {
@@ -26,3 +26,5 @@ void insert(int, struct linked_list **);
 void rem(int, struct linked_list **);
 
 void print(struct linked_list *);
+
+void free_list(struct linked_list **);

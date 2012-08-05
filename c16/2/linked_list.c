@@ -57,6 +57,15 @@ void print(struct linked_list *list)
 	}
 }
 
+void free_list(struct linked_list **list)
+{
+	if (*list == NULL) {
+		return;
+	}
+	free_list(&((*list)->next));
+	(void)free(*list);
+}
+
 void out_of_memory_error()
 {
 	(void)printf("Out of memory!");
