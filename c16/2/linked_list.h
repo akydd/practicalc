@@ -3,7 +3,8 @@
  *
  *       Filename:  linked_list.h
  *
- *    Description:  unordered linked list (for integers) definitions 
+ *    Description:  unordered linked list (for integers) definitions.
+ *		    Allows for duplicate list items. 
  *
  *        Version:  1.0
  *        Created:  8/2/2012 1:20:05 PM
@@ -23,6 +24,9 @@ struct linked_list {
 
 void insert(int, struct linked_list **);
 
+/**
+ * Removes _first occurence_ of int from list.
+ */
 void rem(int, struct linked_list **);
 
 void print(struct linked_list *);

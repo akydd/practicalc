@@ -23,10 +23,24 @@ int main()
 	struct linked_list *my_list = NULL;
 
 	insert(1, &my_list);
-	insert(2, &my_list);
 	insert(3, &my_list);
+	insert(5, &my_list);
+	insert(2, &my_list);
+	insert(4, &my_list);
+	insert(5, &my_list);
 
 	print(my_list);
+	rem(1, &my_list);
+	print(my_list);
+	rem(2, &my_list);
+	print(my_list);
+	rem(5, &my_list);
+	print(my_list);
+	rem(10, &my_list);
+	print(my_list);
+	rem(5, &my_list);
+	print(my_list);
+
 	free_list(&my_list);
 	exit(EXIT_SUCCESS);
 }
