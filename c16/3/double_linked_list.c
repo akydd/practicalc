@@ -15,9 +15,11 @@
  *
  * =============================================================================
  */
-#include "d_linked_list.h"
+#include "double_linked_list.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+void out_of_memory_error();
 
 void insert(int item, struct d_linked_list **list)
 {
@@ -31,6 +33,58 @@ void insert(int item, struct d_linked_list **list)
 		(*list)->item = item;
 	} else {
 		/* find the end of the list and insert there */
-		struct d_liked_list *item = *list;
+		struct d_linked_list *list_ptr = *list;
+		while (list_ptr->next != NULL) {
+			list_ptr = list_ptr->next;
+		}
+		list_ptr->next = malloc(sizeof(struct d_linked_list));
+		if (list_ptr->next == NULL) {
+			out_of_memory_error();
+		}
+		list_ptr->next->prev = list_ptr;
+		list_ptr->next->next = NULL;
+		list_ptr->next->item = item;
 	}
+}
+
+void rem(int item, struct d_linked_list **list)
+{
+
+}
+
+void print(struct d_linked_list *list)
+{
+	if (list == NULL) {
+		return;
+	}
+
+	int i = 0;
+	struct d_linked_list *search_ptr = list;
+	while(search_ptr != NULL) {
+		(void)printf("Item %d: ", i);
+		(void)(printf("%d\n", search_ptr->item));
+		search_ptr = search_ptr->next;
+
+	}
+	(void)printf("\n");
+}
+
+void free_list(struct d_linked_list **list)
+{
+	if (list == NULL) {
+		return;
+	}
+
+	struct d_linked_list *search_ptr = *list;
+	while(search_ptr != NULL) {
+		struct d_linked_list *tmp_ptr = search_ptr->next;
+		free(search_ptr);
+		search_ptr = tmp_ptr;
+	}
+}
+
+void out_of_memory_error()
+{
+	(void)printf("Out of memory!\n");
+	exit(EXIT_FAILURE);
 }

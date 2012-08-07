@@ -19,11 +19,14 @@
 struct d_linked_list {
 	int item;
 	struct d_linked_list *prev;
-	struct d_llinked_list *next;
-}
+	struct d_linked_list *next;
+};
 
 void insert(int, struct d_linked_list **);
 
+/***
+ * Removes first occurance of the int from the linked_list
+ */
 void rem(int, struct d_linked_list **);
 
 void print(struct d_linked_list *);
