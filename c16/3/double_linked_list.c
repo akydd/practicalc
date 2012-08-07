@@ -53,8 +53,9 @@ void rem(int item, struct d_linked_list **list)
 	if ((*list)->item == item) {
 		struct d_linked_list *tmp_ptr = *list;
 		*list = (*list)->next;
-		tmp_ptr->prev == NULL;
+		(*list)->prev = NULL;
 		free(tmp_ptr);
+		return;
 	}
 
 	/* tranverse list looking for first match */

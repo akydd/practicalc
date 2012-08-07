@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -pedantic -ggdb
+CFLAGS=-Wall -ansi -pedantic -ggdb
 
 OBJS=double_linked_list.o 3.o
 
