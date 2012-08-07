@@ -49,32 +49,47 @@ void insert(int item, struct d_linked_list **list)
 
 void rem(int item, struct d_linked_list **list)
 {
+	/* special case if head of list gets deleted */
+	if ((*list)->item == item) {
+		struct d_linked_list *tmp_ptr = *list;
+		*list = (*list)->next;
+		tmp_ptr->prev == NULL;
+		free(tmp_ptr);
+	}
 
+	/* tranverse list looking for first match */
+	struct d_linked_list *search_ptr = *list;
+	while (search_ptr != NULL) {
+		if (search_ptr->item == item) {
+			if (search_ptr->next != NULL) {
+				search_ptr->next->prev = search_ptr->prev;
+			}
+			if (search_ptr->prev != NULL) {
+				search_ptr->prev->next = search_ptr->next;
+			}
+			free(search_ptr);
+			break;
+		} else {
+			search_ptr = search_ptr->next;
+		}
+	}
 }
 
 void print(struct d_linked_list *list)
 {
-	if (list == NULL) {
-		return;
-	}
-
 	int i = 0;
 	struct d_linked_list *search_ptr = list;
 	while(search_ptr != NULL) {
 		(void)printf("Item %d: ", i);
 		(void)(printf("%d\n", search_ptr->item));
 		search_ptr = search_ptr->next;
-
+		i++;
 	}
 	(void)printf("\n");
 }
 
 void free_list(struct d_linked_list **list)
 {
-	if (list == NULL) {
-		return;
-	}
-
 	struct d_linked_list *search_ptr = *list;
 	while(search_ptr != NULL) {
 		struct d_linked_list *tmp_ptr = search_ptr->next;
