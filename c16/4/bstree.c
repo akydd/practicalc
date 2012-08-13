@@ -35,9 +35,39 @@ void insert(int item, struct bstree **tree)
 	}
 }
 
+/**
+ * deletion uses left-branch promotion
+ **/
 void rem(int item, struct bstree **tree)
 {
+	if(*tree == NULL) {
+		return;
+	}
 
+	if (item < (*tree)->item) {
+		rem(item, &((*tree)->left));
+	} else if (item > (*tree)->item) {
+		rem(item, &((*tree)->right));
+	} else if (item == (*tree)->item) {
+		struct bstree *tmp = *tree;
+		/* if (*tree)->left exists, attach (*tree)->right to max node
+		 * within (*tree)->left and promote (*tree)->left to where
+		 * *tree is.*/
+		if ((*tree)->left != NULL) {
+			/* traverse left branch for first NULL right branch */
+			struct bstree **insert = &((*tree)->left);
+			while (*insert != NULL) {
+				insert = &((*insert)->right);
+			}
+			*insert = (*tree)->right;
+			*tree = (*tree)->left;
+		} else {
+		/* otherwise, promote (*tree)->right to where (*tree) is. */
+			*tree = (*tree)->right;
+		}
+		/* Finally, delete the node. */
+		free(tmp);
+	}
 }
 
 void print(struct bstree *tree, int lvl)

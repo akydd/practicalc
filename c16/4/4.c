@@ -23,11 +23,11 @@ int main()
 {
 	struct bstree *mytree = NULL;
 
-	insert(2, &mytree);
+	insert(4, &mytree);
 	print(mytree, 0);
 	(void)printf("\n\n");
 
-	insert(4, &mytree);
+	insert(2, &mytree);
 	print(mytree, 0);
 	(void)printf("\n\n");
 
@@ -44,6 +44,18 @@ int main()
 	(void)printf("\n\n");
 
 	insert(5, &mytree);
+	print(mytree, 0);
+	(void)printf("\n\n");
+
+	insert(7, &mytree);
+	print(mytree, 0);
+	(void)printf("\n\n");
+
+	rem(3, &mytree);
+	print(mytree, 0);
+	(void)printf("\n\n");
+
+	rem(6, &mytree);
 	print(mytree, 0);
 	(void)printf("\n\n");
 
