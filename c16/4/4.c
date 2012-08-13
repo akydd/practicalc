@@ -59,7 +59,14 @@ int main()
 	print(mytree, 0);
 	(void)printf("\n\n");
 
-	free_bstree(&mytree);
+	rem(4, &mytree);
+	print(mytree, 0);
+	(void)printf("\n\n");
 
+	rem(9, &mytree);
+	print(mytree, 0);
+	(void)printf("\n\n");
+
+	free_bstree(&mytree);
 	exit(EXIT_SUCCESS);
 }
