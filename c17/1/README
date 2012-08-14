@@ -1,0 +1,9 @@
+How to perform text file insert operations
+
+1. Open file, read entire contents info a buffer char array of some max size.
+2. When print_line(string) is called, use fgetpos to set the file position in
+   fpos_t *pos.
+3. Match pos with the index in the buffer
+4. Shift all txt in the buffer over by strlen(string).  If length exceeds
+   buffer size, truncate.
+5. Write modified buffer back to the file
