@@ -1,5 +1,5 @@
 /*
- * =============================================================================
+ * ============================================================================
  *
  *       Filename:  1.c
  *
@@ -16,34 +16,12 @@
  *         Author:  Alan Kydd (), akydd@ualberta.net
  *        Company:  
  *
- * =============================================================================
+ * ============================================================================
  */
 #include <stdio.h>
+#include <ctype.h>
 
 static int wordcount(char*);
-static int char_is_alpha(char);
-static int char_is_whitespace(char);
-
-int char_is_whitespace(char letter)
-{
-	int is_whitespace = 0;
-
-	if ( (letter == ' ') || (letter == '\t') || (letter == '\n') ) {
-		is_whitespace = 1;
-	}
-	return is_whitespace;
-}
-
-int char_is_alpha(char letter)
-{
-	int is_char = 0;
-
-	if ( ( ((int)letter <= 90) && ((int)letter >= 65) ) ||
-		( ((int)letter <= 122) && ((int)letter >= 97) ) ) {
-		is_char = 1;
-	}
-	return is_char;
-}
 
 int wordcount(char *string)
 {
@@ -56,16 +34,16 @@ int wordcount(char *string)
 	while (*str_ptr != '\0') {
 
 		/* skip leading whitespace */
-		while (char_is_whitespace(*str_ptr) == 1) {
+		while ((isspace((int)*str_ptr)) != 0) {
 			str_ptr++;
 		}
 
 		/* find the 1st non whitespace char */
-		if (char_is_whitespace(*str_ptr) == 0) {
+		if (isspace((int)*str_ptr) == 0) {
 			/* then find the next whitespace, or \0 */
 			srch_ptr = str_ptr + 1;
 			while ( (*srch_ptr != '\0') && 
-					(char_is_whitespace(*srch_ptr) == 0) ) {
+					(isspace((int)*srch_ptr) == 0) ) {
 				srch_ptr++;
 			}
 
@@ -74,7 +52,7 @@ int wordcount(char *string)
 					parse_ptr++) {
 				/* if char is not alpha, don't increment
 				 * count, and forget about the other chars */
-				if (char_is_alpha(*parse_ptr) == 0) {
+				if(isalpha((int)*parse_ptr) == 0) {
 					increment = 0;
 					break;
 				}
