@@ -29,6 +29,9 @@ int main(void)
 
 	while (1)
 	{
+		/* clear input buffer */
+		input[0] = "\0";
+
 		(void) printf("To convert, type the menu option followed by ");
 		(void) printf("the value you wish to convert\n");
 		(void) printf(" 1. inches to centimeters\n");
@@ -43,15 +46,23 @@ int main(void)
 		(void) printf("Type '0' to quit.\n");
 
 		(void) fgets(input, sizeof(input), stdin);
-		(void) sscanf(input, "%d %f", &option, &imp_value);
+		int scanned = (sscanf(input, "%d %f", &option, &imp_value));
 
-		if (option == 0)
-			break;
-
-		if ((option <= 9) && (option >= 0))
-			(void) printf("%f converts to %f.\n\n", imp_value, imp_value * conversions[option-1]);
-		else
-			(void)printf("Invalid option.\n\n");
+		if (scanned == 2) {
+			if ((option <= 9) && (option >= 0)) {
+				(void) printf("%f converts to %f.\n\n", imp_value, imp_value * conversions[option-1]);
+			} else {
+				(void)printf("Invalid options.\n\n");
+			}
+		} else if (scanned == 1) {
+			if (option == 0) {
+				break;
+			} else {
+				(void)printf("Invalid option.\n\n");
+			}
+		} else {
+			(void)printf("Invalid options.\n\n");
+		}
 	}
 
 	(void) printf("Bye!\n");

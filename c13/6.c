@@ -60,7 +60,7 @@ void get_mailing_labels(char *filename)
 
 	/* read the file header */
 	if ((items_read =
-	     fread(file_header, 1, sizeof(struct header), file)) != 0) {
+	     fread(file_header, sizeof(struct header), 1, file)) != 0) {
 		/* validate header */
 		if (strcmp(file_header->type, "Mail") != 0) {
 			(void) printf("Invalid file format!\n");
@@ -76,7 +76,7 @@ void get_mailing_labels(char *filename)
 		/* file position is auto set at point after the header */
 		for (i = 0; i < file_header->num_records; i++) {
 			(void) fread(file_record,
-				     1, sizeof(struct profile), file);
+				     sizeof(struct profile), 1, file);
 			print_profile(file_record);
 		}
 	}
@@ -96,7 +96,7 @@ void write_test_data(char *filename)
 
 	/* define the header and write to file */
 	struct header *file_header = create_header("Mail", 1, 2);
-	(void) fwrite(file_header, 1, sizeof(struct header), file);
+	(void) fwrite(file_header, sizeof(struct header), 1, file);
 
 	/* define records and write to file */
 	struct profile *record_1 = create_profile("Alan", "Kydd", "Unit 1824",
@@ -104,8 +104,8 @@ void write_test_data(char *filename)
 	struct profile *record_2 = create_profile("Bruce", "Wayne",
 			"Wayne Manor", "", "Gotham City", "New York",
 			"123345");
-	(void) fwrite(record_1, 1, sizeof(struct profile), file);
-	(void) fwrite(record_2, 1, sizeof(struct profile), file);
+	(void) fwrite(record_1, sizeof(struct profile), 1, file);
+	(void) fwrite(record_2, sizeof(struct profile), 1, file);
 
 	/* close file */
 	(void) fclose(file);

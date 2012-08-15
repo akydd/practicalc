@@ -28,6 +28,10 @@ char *program_name;
 int main(int argc, char* argv[])
 {
 	program_name = argv[0];
+	if(argc != 4) {
+		(void)usage();
+	}
+
 	char *input_file_name = argv[1];
 	char *div_3_file_name= argv[2];
 	char *other_file_name = argv[3];

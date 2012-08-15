@@ -23,6 +23,10 @@ static void usage(void);
 
 int main (int argc, char *argv[])
 {
+	if (argc != 3) {
+		usage();
+	}
+
 	char *in_filename = argv[1];
 	char *out_filename = argv[2];
 

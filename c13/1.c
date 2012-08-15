@@ -30,6 +30,10 @@ int main(int argc, char *argv[])
 	char *str;
 	char string[200];
 
+	if (argc != 2) {
+		(void)usage();
+	}
+
 	in_file = fopen(file_name, "r");
 	if (in_file == NULL) {
 		(void)printf("Cannot open file %s.\n", file_name);

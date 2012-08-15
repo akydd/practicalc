@@ -35,6 +35,10 @@ int main(int argc, char *argv[])
 	int ch;
 	char *spaces = "    ";
 
+	if (argc != 3) {
+		(void)usage();
+	}
+
 	in_file = fopen(in_file_name, "r");
 	if (in_file == NULL) {
 		(void)printf("Cannot open file %s.\n", in_file_name);
