@@ -1,4 +1,4 @@
-CFLAGS=-Wall -Wextra -pedantic -ggdb
+CFLAGS=-Wall -Wextra -ansi -pedantic -ggdb
 OBJS=~/practicalc/c11/profile.o file_format.o 6.o
 
 all: 1 2 3 4a 4b 5 6

@@ -30,6 +30,10 @@ static void get_mailing_labels(char *);
 
 int main(int argc, char *argv[])
 {
+	if (argc != 2) {
+		usage();
+	}
+
 	char *filename = argv[1];
 
 	write_test_data(filename);

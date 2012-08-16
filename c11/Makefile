@@ -1,4 +1,4 @@
-CFLAGS=-Wall -Wextra
+CFLAGS=-Wall -Wextra -ansi -pedantic
 
 OBJ1=profile.o 1.o
 OBJ2=datetime.o 2.o

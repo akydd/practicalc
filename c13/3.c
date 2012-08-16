@@ -27,32 +27,39 @@ char *program_name;
 
 int main(int argc, char* argv[])
 {
+	FILE *div_3_file = NULL;
+	FILE *other_file = NULL;
+
 	program_name = argv[0];
 	if(argc != 4) {
-		(void)usage();
+		usage();
 	}
 
 	char *input_file_name = argv[1];
-	char *div_3_file_name= argv[2];
+	char *div_3_file_name = argv[2];
 	char *other_file_name = argv[3];
 
-	/* open all files */
+	/* open input file */
 	FILE *in_file = fopen(input_file_name, "r");
-	FILE *div_3_file = fopen(div_3_file_name, "w");
-	FILE *other_file = fopen(other_file_name, "w");
-	
-	/* check all files */
+
+	/* if input file is ok, open output files too */
 	if (in_file == NULL) {
 		(void)printf("Cannot open input file!\n");
-		(void)usage();
+		usage();
+	} else {
+		div_3_file = fopen(div_3_file_name, "w");
+		other_file = fopen(other_file_name, "w");
 	}
+
 	if (div_3_file == NULL) {
 		(void)printf("Cannot open [div3]!\n");
-		(void)usage();
+		(void)fclose(other_file);
+		usage();
 	}
 	if (other_file == NULL) {
 		(void)printf("Cannot open [other]!\n");
-		(void)usage();
+		(void)fclose(div_3_file);
+		usage();
 	}
 
 	/* read input */
