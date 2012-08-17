@@ -63,28 +63,33 @@ void get_mailing_labels(char *filename)
 	}
 
 	/* read the file header */
+	file_header = malloc(sizeof(struct header));;
 	if ((items_read =
-	     fread(file_header, sizeof(struct header), 1, file)) != 0) {
+				fread(file_header, sizeof(struct header), 1, file)) != 0) {
 		/* validate header */
 		if (strcmp(file_header->type, "Mail") != 0) {
 			(void) printf("Invalid file format!\n");
 			(void) printf("File type is %s.\n",
-				      file_header->type);
+					file_header->type);
+			free(file_header);
 			usage();
 		} else {
 			(void) printf("Num records is %d.\n",
-				      file_header->num_records);
+					file_header->num_records);
 		}
 
 		/* if we're here, header validation passed. */
 		/* file position is auto set at point after the header */
+		file_record = malloc(sizeof(struct profile));
 		for (i = 0; i < file_header->num_records; i++) {
 			(void) fread(file_record,
-				     sizeof(struct profile), 1, file);
+					sizeof(struct profile), 1, file);
 			print_profile(file_record);
 		}
 	}
 
+	free(file_header);
+	free(file_record);
 	(void) fclose(file);
 }
 
