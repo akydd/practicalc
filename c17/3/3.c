@@ -23,7 +23,14 @@ int main(void)
 	enter("Added first");
 	enter("Added second");
 	enter("Added but will be deleted");
+	enter("The last shall be first");
 
+	print();
+
+	delete("Not there");
+	print();
+
+	delete("Added but will be deleted");
 	print();
 
 	delete_table();

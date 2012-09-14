@@ -91,6 +91,7 @@ void print(void)
 		(void)printf("\n");
 		search = search->next;
 	}
+	(void)printf("\n");
 }
 
 void delete_table(void)
