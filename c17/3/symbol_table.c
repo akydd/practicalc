@@ -27,7 +27,7 @@ void enter(char *name)
 	/* malloc entry and cpy name into it */
 	struct table *new_symbol = malloc(sizeof(struct table));
 	new_symbol->name = malloc(sizeof(int) * (strlen(name) + 1));
-	(void)strcpy(name, new_symbol->name);
+	(void)strcpy(new_symbol->name, name);
 
 	/* add entry to front of list */
 	new_symbol->next = symbol_table;
@@ -89,6 +89,7 @@ void print(void)
 		}
 
 		(void)printf("\n");
+		search = search->next;
 	}
 }
 
