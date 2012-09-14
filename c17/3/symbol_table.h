@@ -15,6 +15,11 @@
  *
  * ============================================================================
  */
+
+/* include guard */
+#ifndef SYMBOL_TABLE_H
+#define SYMBOL_TABLE_H
+
 #include <stdlib.h>
 
 /* symbol table is implemented as an intrusive double-linked list */
@@ -23,7 +28,7 @@ struct table {
 	struct table *next;
 	struct table *prev;
 };
-struct table *symbol_table = NULL;
+extern struct table *symbol_table;
 
 /* 
  * Enter a name into the symbol table
@@ -48,3 +53,5 @@ void print(void);
  * delete the entire table
  */
 void delete_table(void);
+
+#endif
