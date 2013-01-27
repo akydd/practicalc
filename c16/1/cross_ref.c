@@ -1,5 +1,5 @@
 /*
- * =============================================================================
+ * ============================================================================
  *
  *       Filename:  cross_ref.c
  *
@@ -13,7 +13,7 @@
  *         Author:  Alan Kydd (), akydd@ualberta.net
  *        Company:  
  *
- * =============================================================================
+ * ============================================================================
  */
 #include "cross_ref.h"
 #include <stdio.h>
@@ -31,7 +31,7 @@ void insert(char *word, int line, struct tree_node **node)
 		if (*node == NULL) {
 			out_of_memory_so_exit();
 		}
-		
+
 		(*node)->word = malloc((strlen(word) + 1) * sizeof(char));
 		if ((*node)->word == NULL) {
 			out_of_memory_so_exit();
@@ -60,21 +60,24 @@ void insert(char *word, int line, struct tree_node **node)
 
 void insert_reference(int line, struct list_node **node)
 {
-	if (*node == NULL) {
-		*node = malloc(sizeof(struct list_node));
-		if (*node == NULL) {
-			out_of_memory_so_exit();
-		}
-		(*node)->line = line;
-		(*node)->count = 1;
-		(*node)->next = NULL;
-	} else {
-		if (line == (*node)->line) {
-			(*node)->count++;
+	struct list_node **current = node;
+	while(*current != NULL) {
+		if(line == (*current)->line) {
+			(*current)->count++;
+			return;
 		} else {
-			insert_reference(line, &((*node)->next));
+			current = &((*current)->next);
 		}
 	}
+
+	/* no existing reference exists, create a new one. */
+	*current = malloc(sizeof(struct list_node));
+	if (*current == NULL) {
+		out_of_memory_so_exit();
+	}
+	(*current)->line = line;
+	(*current)->count = 1;
+	(*current)->next = NULL;
 }
 
 void print_tree_node(struct tree_node *node)
@@ -87,7 +90,7 @@ void print_tree_node(struct tree_node *node)
 
 	(void)printf("\"%s\"\n", node->word);
 	print_list_node(node->references);
-	
+
 	print_tree_node(node->right);
 }
 
@@ -109,23 +112,20 @@ void free_tree_node(struct tree_node **node)
 
 void free_list_node(struct list_node **node)
 {
-	if (*node == NULL) {
-		return;
+	while(*node != NULL) {
+		struct list_node *delete = *node;
+		*node = delete->next;
+		free(delete);
 	}
-
-	free_list_node(&((*node)->next));
-	free(*node);
 }
 
 void print_list_node(struct list_node *node)
 {
-	if (node == NULL) {
-		return;
+	while (node != NULL) {
+		(void)printf("\tappears in line %d, ", node->line);
+		(void)printf("%d time(s).\n", node->count);
+		node = node->next;
 	}
-
-	(void)printf("\tappears in line %d, ", node->line);
-	(void)printf("%d time(s).\n", node->count);
-	print_list_node(node->next);
 }
 
 void out_of_memory_so_exit()

@@ -1,5 +1,5 @@
 /*
- * =============================================================================
+ * ============================================================================
  *
  *       Filename:  1.h
  *
@@ -9,6 +9,8 @@
  *                  each word appears on, and the number of times each word
  *                  appears in each line.
  *
+ *                  Linked list operations avoid recursion.
+ *
  *        Version:  1.0
  *        Created:  12-07-30 10:10:53 PM
  *       Revision:  none
@@ -17,7 +19,7 @@
  *         Author:  Alan Kydd (), akydd@ualberta.net
  *        Company:  
  *
- * =============================================================================
+ * ============================================================================
  */
 
 struct list_node {
@@ -35,8 +37,12 @@ struct tree_node {
 
 void insert(char *, int, struct tree_node **);
 
+void insert_reference(int, struct list_node **);
+
 void print_tree_node(struct tree_node *);
 
 void print_list_node(struct list_node *);
 
 void free_tree_node(struct tree_node **);
+
+void free_list_node(struct list_node **);
