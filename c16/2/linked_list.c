@@ -1,5 +1,5 @@
 /*
- * =====================================================================================
+ * =============================================================================
  *
  *       Filename:  linked_list.c
  *
@@ -13,7 +13,7 @@
  *         Author:  Alan Kydd, akydd@ualberta.net
  *   Organization:  
  *
- * =====================================================================================
+ * =============================================================================
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,71 +21,41 @@
 
 void out_of_memory_error();
 
-void insert(int item, struct linked_list **list)
+void insert(int item, struct linked_list **head)
 {
-	if (*list == NULL) {
-		*list = malloc(sizeof(struct linked_list));
-		if (*list == NULL) {
-			out_of_memory_error();
-		}
-
-		(*list)->item = item;
-		(*list)->next = NULL;
-	} else {
-		/* 
-		 * could have iterated past non-null
-		 * nodes here instead of using recursion
-		 */
-		insert(item, &((*list)->next));
+	/* init new list element */
+	struct linked_list *new_int = malloc(sizeof(struct linked_list));
+	if (new_int == NULL) {
+		out_of_memory_error();
 	}
+	new_int->item = item;
+	
+	/* link */
+	new_int->next = *head;
+	*head = new_int;
 }
 
-void rem(int item, struct linked_list **list)
+void rem(int item, struct linked_list **head)
 {
-	if (*list == NULL) {
-		return;
-		/* do nothing */
-	}
-
-	struct linked_list *search_ptr = *list;
-	/* check first item in list */
-	if (search_ptr->item == item) {
-		*list = search_ptr->next;
-		free(search_ptr);
-	} else {
-		while (search_ptr->next != NULL) {
-			if(search_ptr->next->item != item) {
-				search_ptr = search_ptr->next;
-			} else {
-				struct linked_list *del_ptr = search_ptr->next;
-				search_ptr->next = del_ptr->next;
-				free(del_ptr);
-				break;
-			}
+	struct linked_list **list_ptr = head;
+	while(*list_ptr != NULL) {
+		if((*list_ptr)->item == item) {
+			struct linked_list *delete = *list_ptr;
+			*list_ptr = delete->next;
+			free(delete);
+		} else {
+			list_ptr = &(*list_ptr)->next;
 		}
 	}
 }
 
-void print(struct linked_list *list)
+void free_list(struct linked_list **head)
 {
-	/* iterate and print */
-	int i = 0;
-	struct linked_list *list_ptr = list;
-	while(list_ptr != NULL) {
-		(void)printf("Item %d: %d\n", i, list_ptr->item);
-		i++;
-		list_ptr = list_ptr->next;
+	while(*head != NULL) {
+		struct linked_list *entry = *head;
+		*head = entry->next;
+		free(entry);
 	}
-	(void)printf("\n");
-}
-
-void free_list(struct linked_list **list)
-{
-	if (*list == NULL) {
-		return;
-	}
-	free_list(&((*list)->next));
-	free(*list);
 }
 
 void out_of_memory_error()

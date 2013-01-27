@@ -22,13 +22,16 @@ struct linked_list {
 	struct linked_list *next;
 };
 
+/**
+ * Inserts new int to the front of the list
+ */
 void insert(int, struct linked_list **);
 
 /**
- * Removes _first occurence_ of int from list.
+ * Removes all occurences of int from the list
  */
 void rem(int, struct linked_list **);
 
-void print(struct linked_list *);
+void print(struct linked_list **);
 
 void free_list(struct linked_list **);
