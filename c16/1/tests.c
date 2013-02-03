@@ -111,6 +111,50 @@ static char *test_insert_new_entry()
 	return 0;
 }
 
+static char *test_insert_duplicate_word_different_line()
+{
+	struct tree_node *node = NULL;
+	char *word = "New entry";
+	insert(word, 1, &node);
+	insert(word, 2, &node);
+
+	mu_assert("Existing node deleted", node != NULL);
+	mu_assert("New entry has NULL word", node->word != NULL);
+	mu_assert("New entry has wrong word", strcmp(word, node->word) == 0);
+	mu_assert("Refs were deleted", node->references != NULL);
+	mu_assert("Existing ref has wrong line", node->references->line == 1);
+	mu_assert("Existing ref has wrong count", node->references->count == 1);
+	mu_assert("New ref not created", node->references->next != NULL);
+	mu_assert("New ref has wrong line", node->references->next->line == 2);
+	mu_assert("New ref has wrong count", node->references->next->count == 1);
+	mu_assert("New entry has non-null left leaf", node->left == NULL);
+	mu_assert("New entry has non-null right leaf", node->right == NULL);
+
+	free_tree_node(&node);
+	return 0;
+}
+
+
+static char *test_insert_duplicate_word_same_line()
+{
+	struct tree_node *node = NULL;
+	char *word = "New entry";
+	insert(word, 1, &node);
+	insert(word, 1, &node);
+
+	mu_assert("Existing node deleted", node != NULL);
+	mu_assert("New entry has NULL word", node->word != NULL);
+	mu_assert("New entry has wrong word", strcmp(word, node->word) == 0);
+	mu_assert("Existing reference deleted", node->references != NULL);
+	mu_assert("Reference has wrong line", node->references->line == 1);
+	mu_assert("Reference has wrong count", node->references->count == 2);
+	mu_assert("New entry has non-null left leaf", node->left == NULL);
+	mu_assert("New entry has non-null right leaf", node->right == NULL);
+
+	free_tree_node(&node);
+	return 0;
+}
+
 static char *all_tests()
 {
 	mu_run_test(test_free_list_node);
@@ -118,6 +162,8 @@ static char *all_tests()
 	mu_run_test(test_insert_reference_existing_entry);
 	mu_run_test(test_insert_reference_existing_entry_different_line);
 	mu_run_test(test_insert_new_entry);
+	mu_run_test(test_insert_duplicate_word_same_line);
+	mu_run_test(test_insert_duplicate_word_different_line);
 	return 0;
 }
 
