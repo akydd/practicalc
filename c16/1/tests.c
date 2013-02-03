@@ -17,6 +17,7 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "cross_ref.h"
 
 #define mu_assert(message, test) do { if (!(test)) return message; } while (0)
@@ -91,12 +92,32 @@ static char *test_insert_reference_existing_entry()
 	return 0;
 }
 
+static char *test_insert_new_entry()
+{
+	struct tree_node *node = NULL;
+	char *word = "New entry";
+	insert(word, 1, &node);
+
+	mu_assert("Error: new element not added", node != NULL);
+	mu_assert("New entry has NULL word", node->word != NULL);
+	mu_assert("New entry has wrong word", strcmp(word, node->word) == 0);
+	mu_assert("No reference created", node->references != NULL);
+	mu_assert("Reference has wrong line", node->references->line == 1);
+	mu_assert("Reference has wrong count", node->references->count == 1);
+	mu_assert("New entry has non-null left leaf", node->left == NULL);
+	mu_assert("New entry has non-null right leaf", node->right == NULL);
+
+	free_tree_node(&node);
+	return 0;
+}
+
 static char *all_tests()
 {
 	mu_run_test(test_free_list_node);
 	mu_run_test(test_insert_reference_new_entry);
 	mu_run_test(test_insert_reference_existing_entry);
 	mu_run_test(test_insert_reference_existing_entry_different_line);
+	mu_run_test(test_insert_new_entry);
 	return 0;
 }
 
