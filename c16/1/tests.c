@@ -155,6 +155,52 @@ static char *test_insert_duplicate_word_same_line()
 	return 0;
 }
 
+static char *test_insert_left_node()
+{
+	struct tree_node *node = NULL;
+	char *head_word = "head";
+	char *left_word = "ahead";
+	insert(head_word, 1, &node);
+	insert(left_word, 3, &node);
+
+	mu_assert("Tree is null", node != NULL);
+	mu_assert("Wrong head node word", strcmp(node->word, head_word) == 0);
+	mu_assert("Wrong head node line", node->references->line == 1);
+	mu_assert("Wrong head node count", node->references->count == 1);
+	mu_assert("Right node not null", node->right == NULL);
+	mu_assert("Left node null", node->left != NULL);
+	mu_assert("Wrong left node word", strcmp(node->left->word, left_word) == 0);
+	mu_assert("Wrong left node count", node->left->references->count == 1);
+	mu_assert("Wrong left node line", node->left->references->line == 3);
+	mu_assert("Extra left node ref", node->left->references->next == NULL);
+
+	free_tree_node(&node);
+	return 0;
+}
+
+static char *test_insert_right_node()
+{
+	struct tree_node *node = NULL;
+	char *head_word = "head";
+	char *right_word = "lead";
+	insert(head_word, 1, &node);
+	insert(right_word, 3, &node);
+
+	mu_assert("Tree is null", node != NULL);
+	mu_assert("Wrong head node word", strcmp(node->word, head_word) == 0);
+	mu_assert("Wrong head node line", node->references->line == 1);
+	mu_assert("Wrong head node count", node->references->count == 1);
+	mu_assert("Left node not null", node->left == NULL);
+	mu_assert("Right node null", node->right != NULL);
+	mu_assert("Wrong right node word", strcmp(node->right->word, right_word) == 0);
+	mu_assert("Wrong right node count", node->right->references->count == 1);
+	mu_assert("Wrong right node line", node->right->references->line == 3);
+	mu_assert("Extra right node ref", node->right->references->next == NULL);
+
+	free_tree_node(&node);
+	return 0;
+}
+
 static char *all_tests()
 {
 	mu_run_test(test_free_list_node);
@@ -164,6 +210,8 @@ static char *all_tests()
 	mu_run_test(test_insert_new_entry);
 	mu_run_test(test_insert_duplicate_word_same_line);
 	mu_run_test(test_insert_duplicate_word_different_line);
+	mu_run_test(test_insert_left_node);
+	mu_run_test(test_insert_right_node);
 	return 0;
 }
 
