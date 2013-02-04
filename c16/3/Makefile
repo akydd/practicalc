@@ -1,10 +1,10 @@
 CC=gcc
 CFLAGS=-Wall -ansi -pedantic -ggdb
 
-OBJS=double_linked_list.o 3.o
+OBJS=double_linked_list.o tests.o
 
-3: $(OBJS)
-	$(CC) $(CFLAGS) -o 3 $(OBJS)
+tests: $(OBJS)
+	$(CC) $(CFLAGS) -o tests $(OBJS)
 
 double_linked_list.o:double_linked_list.c double_linked_list.h
-3.o:3.c double_linked_list.h
+tests.o:tests.c double_linked_list.h
